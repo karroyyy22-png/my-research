@@ -1,0 +1,26 @@
+# 数据文件（体积大，不建议直接进git，可用DVC/Git LFS单独管理）
+data/*
+!data/.gitkeep
+
+# 模型权重、checkpoint
+*.ckpt
+*.pt
+*.pth
+*.h5
+*.onnx
+
+# Python
+__pycache__/
+*.pyc
+.ipynb_checkpoints/
+venv/
+.venv/
+*.egg-info/
+
+# 系统/编辑器
+.DS_Store
+.vscode/
+.idea/
+
+# 日志（如果太大也建议排除，或只保留关键日志）
+*.log

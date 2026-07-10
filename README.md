@@ -21,6 +21,9 @@
 | 2026-06-06 | [omnifd-asap-fusion](experiments/2026-06-06-omnifd-asap-fusion/) | 探索OmniFD人脸特征能否提升ASAP | 阴性结果，分数级融合AUC反降10.84% |
 | 2026-06-09 | [lr-batchsize-tamperdetector-ablation](experiments/2026-06-09-lr-batchsize-tamperdetector-ablation/) | lr缩放/VLM选择/TamperDetector消融 | lr缩放显著损害bbox定位(IoU -10~24%) |
 
+## 实验记录整理规范
+新实验记录（不管是自己写还是用LLM整理）请遵循 [EXPERIMENT_LOGGING_GUIDE.md](EXPERIMENT_LOGGING_GUIDE.md) 里的格式规范。
+
 ## 关联代码仓库
 本仓库只存实验记录（方法、参数、结果、结论），不包含大型代码库本身。实际代码单独仓库管理，各实验 README 会注明使用的精确 commit：
 - [ASAP](https://github.com/karroyyy22-png/ASAP)（fork自 [CriliasMiller/ASAP](https://github.com/CriliasMiller/ASAP)）

@@ -1,7 +1,0 @@
-# 本次实验的超参数配置
-seed: 42
-learning_rate: 0.001
-batch_size: 32
-epochs: 50
-model: baseline
-notes: ""

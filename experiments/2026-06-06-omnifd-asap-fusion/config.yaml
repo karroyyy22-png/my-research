@@ -1,0 +1,35 @@
+experiment_name: omnifd_asap_fusion
+asap:
+  code_path: /nas/data_2/wanhongz/ASAP
+  checkpoint: results/log20260606_215506_train_4gpu_batch16/checkpoint_best.pth
+  feature_dim: 768
+  input_size: 256x256
+omnifd:
+  code_path: /nas/data_2/wanhongz/OmniFD
+  checkpoint: omnifd_swin-s_50k_forgerynet.pth
+  backbone: Swin-S (MMPretrain)
+  feature_dim: 512
+  input_size: 224x224
+dataset:
+  name: DGM4
+  path: /nas/data_2/wanhongz/datasets/DGM4/
+  face_cropped_samples: 43780
+  real: 24344
+  face_swap: 10515
+  face_attribute: 8921
+
+fusion_experiments:
+  score_level:
+    method: "0.5 * ASAP_prob + 0.5 * OmniFD_prob"
+    applies_to: "face_swap / face_attribute相关样本，且OmniFD检测到人脸"
+    result: 负面（AUC -10.84%）
+  feature_level:
+    method: "OmniFD 512维global_feat投影对齐后与ASAP 768维视觉特征拼接压缩，替换原视觉特征"
+    finetune_epochs: 5
+    finetune_scope: "仅新增融合层+分类头，其余ASAP参数冻结"
+    result: 负面但影响较小（AUC -0.30%）
+
+env:
+  python: "3.13"
+  pytorch: "2.7.1"
+  gpu: "4x RTX 6000 Ada"

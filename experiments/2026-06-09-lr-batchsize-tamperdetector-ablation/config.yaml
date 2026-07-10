@@ -1,0 +1,39 @@
+experiments:
+  A:
+    description: baseline（原始ASAP）
+    model: ASAP (original)
+    lr: 2e-5
+    lr_img: 1e-4
+    vlm_caption: BLIP
+    log_dir: results/log20260602_134300_train_4gpu_batch16/
+  B:
+    description: 原始ASAP + TamperDetector
+    model: ASAP + TamperDetector(EfficientNet-B0)
+    lr: 2e-5
+    lr_img: 1e-4
+    vlm_caption: BLIP
+    log_dir: results/log20260606_215506_train_4gpu_batch16/
+  C:
+    description: 原始ASAP，按论文batch_size对lr做线性缩放
+    model: ASAP (original)
+    lr: 1.25e-6
+    lr_img: 6.25e-6
+    vlm_caption: BLIP
+    log_dir: results/log20260609_232652_train_4gpu_batch16/
+  D:
+    description: 同C，但caption模型换成VisCPM
+    model: ASAP (original)
+    lr: 1.25e-6
+    lr_img: 6.25e-6
+    vlm_caption: VisCPM-Chat
+    log_dir: results/log20260613_125731_train_4gpu_batch16/
+
+common:
+  gpu_count: 4
+  batch_size_per_gpu: 16
+  total_batch_size: 64
+  epochs: 50
+  optimizer: AdamW
+  pretrained_weight: ALBEF_4M.pth
+  dataset: DGM4
+  note: "lr(C/D) = 2e-5 * (64/1024) = 1.25e-6, 論文はbatch_size=1024(8GPU*128)を想定"

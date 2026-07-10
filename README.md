@@ -17,7 +17,9 @@
 
 | 日期 | 实验目录 | 目的 | 关键结果 |
 |------|---------|------|---------|
-| 2026-07-10 | [example-experiment](experiments/2026-07-10-example-experiment/) | 示例：验证baseline | acc=0.82 |
+| 2026-06-02 | [asap-baseline-repro](experiments/2026-06-02-asap-baseline-repro/) | 复现ASAP在DGM4上的检测效果 | AUC=92.06%，作为后续baseline |
+| 2026-06-06 | [omnifd-asap-fusion](experiments/2026-06-06-omnifd-asap-fusion/) | 探索OmniFD人脸特征能否提升ASAP | 阴性结果，分数级融合AUC反降10.84% |
+| 2026-06-09 | [lr-batchsize-tamperdetector-ablation](experiments/2026-06-09-lr-batchsize-tamperdetector-ablation/) | lr缩放/VLM选择/TamperDetector消融 | lr缩放显著损害bbox定位(IoU -10~24%) |
 
 ## 环境依赖
 ```bash

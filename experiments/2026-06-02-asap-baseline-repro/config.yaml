@@ -1,0 +1,14 @@
+experiment_name: A_baseline
+model: ASAP (original)
+gpu_count: 4
+batch_size_per_gpu: 16
+total_batch_size: 64
+lr: 2e-5
+lr_img: 1e-4
+epochs: 50
+vlm_caption: BLIP
+llm_explanation: Qwen2.5-1.5B-Instruct
+pretrained_weight: ALBEF_4M.pth
+dataset: DGM4
+train_samples: 208184
+log_dir: results/log20260602_134300_train_4gpu_batch16/

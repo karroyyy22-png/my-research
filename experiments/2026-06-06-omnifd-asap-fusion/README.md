@@ -58,6 +58,26 @@ OmniFD路： 人脸区域 (224x224) → 特征512维
 融合： 768 + 512 → 分类
 ```
 
+**对应代码**（`models/ASAP.py`，commit `5a59424`，`ASAP.__init__` 内）：
+```python
+self.omni_proj = nn.Linear(512, text_width)                  # OmniFD 512维特征投影对齐维度
+self.omni_fusion_fc = nn.Linear(text_width * 2, text_width)  # 拼接后压缩回原维度
+```
+`forward()` 接口也相应加了 `omni_feat` 参数用于传入 OmniFD 特征：
+```python
+def forward(self, image, label, text, fake_image_box, fake_text_pos, cap_input, prom_input,
+            res_fake_pos, res_fake_pos_patch, alpha=0, is_train=True, omni_feat=None):
+```
+实际融合发生在 `forward()` 内部（训练分支和推理分支各出现一次，逻辑相同）：
+```python
+if omni_feat is not None:
+    omni_feat_proj = self.omni_proj(omni_feat)
+    vision_feat = self.omni_fusion_fc(torch.cat([vision_feat, omni_feat_proj], dim=-1))
+```
+即：OmniFD 的 512 维特征投影到 text_width 维，与原始 `vision_feat` 拼接后再压缩回 text_width 维，**直接替换**原来的 `vision_feat`，后续分类头等下游逻辑不变。`omni_feat` 为 `None` 时（即没有对应人脸的样本）该逻辑跳过，等价于原始 ASAP。
+
+> 注：同一份代码里还留有一段被注释掉的 `TamperDetector` 类定义和调用（对应实验 `2026-06-09-lr-batchsize-tamperdetector-ablation` 里的实验B），是切换实验思路时的中间状态，未删除，如需恢复可直接取消注释。
+
 ## 参数配置
 
 | 项目 | 值 |

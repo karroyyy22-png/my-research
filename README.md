@@ -21,6 +21,11 @@
 | 2026-06-06 | [omnifd-asap-fusion](experiments/2026-06-06-omnifd-asap-fusion/) | 探索OmniFD人脸特征能否提升ASAP | 阴性结果，分数级融合AUC反降10.84% |
 | 2026-06-09 | [lr-batchsize-tamperdetector-ablation](experiments/2026-06-09-lr-batchsize-tamperdetector-ablation/) | lr缩放/VLM选择/TamperDetector消融 | lr缩放显著损害bbox定位(IoU -10~24%) |
 
+## 关联代码仓库
+本仓库只存实验记录（方法、参数、结果、结论），不包含大型代码库本身。实际代码单独仓库管理，各实验 README 会注明使用的精确 commit：
+- [ASAP](https://github.com/karroyyy22-png/ASAP)（fork自 [CriliasMiller/ASAP](https://github.com/CriliasMiller/ASAP)）
+- [OmniFD](https://github.com/karroyyy22-png/OmniFD)（fork自 [haotianll/OmniFD](https://github.com/haotianll/OmniFD)）
+
 ## 环境依赖
 ```bash
 pip install -r requirements.txt

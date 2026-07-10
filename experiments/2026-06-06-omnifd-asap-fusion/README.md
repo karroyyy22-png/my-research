@@ -3,6 +3,9 @@
 - **日期**：2026-06-06
 - **负责人**：wanhongz
 - **关联checkpoint**：`results/log20260606_215506_train_4gpu_batch16/checkpoint_best.pth`
+- **代码版本**：
+  - [ASAP](https://github.com/karroyyy22-png/ASAP)（fork自 [CriliasMiller/ASAP](https://github.com/CriliasMiller/ASAP)），commit `5a59424`
+  - [OmniFD](https://github.com/karroyyy22-png/OmniFD)（fork自 [haotianll/OmniFD](https://github.com/haotianll/OmniFD)），commit `7401d1f`（含人脸特征提取脚本 `extract_face_features.py` 等）
 
 ## 目的
 上一组消融实验（见 `2026-06-09-lr-batchsize-tamperdetector-ablation`）发现，ASAP 依赖 VLM 隐式跨模态语义对齐来做换脸定位，鲁棒性很脆弱（lr 缩小后 face_swap 的 IoU@50 从 79.82% 暴跌到 61.76%）。因此本实验尝试引入显式的微观物理痕迹提取器 **OmniFD**（人脸伪造检测模型），探索能否用它的判别信息提升 ASAP 在人脸篡改类别上的检测效果。

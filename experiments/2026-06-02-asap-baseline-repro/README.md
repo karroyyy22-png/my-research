@@ -3,6 +3,9 @@
 - **日期**：2026-06-02
 - **负责人**：wanhongz
 - **关联日志目录**：`results/log20260602_134300_train_4gpu_batch16/`
+- **代码版本**：[ASAP](https://github.com/karroyyy22-png/ASAP)（fork自 [CriliasMiller/ASAP](https://github.com/CriliasMiller/ASAP)），commit `5a59424`
+
+> 注：该 commit 是代码历史整理时的一个"补充提交"（合并了此前未被版本控制记录的多次修改），并非本实验运行时的精确快照——本实验运行更早，当时代码未被 git 追踪。之后的实验会做到"跑之前先记录 commit hash"，保证精确可追溯。
 
 ## 目的
 在 DGM4 数据集上复现 ASAP 论文的检测结果，验证自己的训练流程（数据准备、训练脚本、评测脚本）是否正确，为后续改进实验提供可信的对比基准（baseline）。

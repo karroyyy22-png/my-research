@@ -2,6 +2,7 @@
 
 - **日期**：2026-06-06 ~ 2026-06-13
 - **负责人**：wanhongz
+- **代码版本**：[ASAP](https://github.com/karroyyy22-png/ASAP)（fork自 [CriliasMiller/ASAP](https://github.com/CriliasMiller/ASAP)），commit `5a59424`（含TamperDetector模块 `tamper_detector/`、lr消融配置 `configs/train_origin.yaml` 等）
 - **关联日志目录**：
   - A: `results/log20260602_134300_train_4gpu_batch16/`（即 baseline，见实验 2026-06-02）
   - B: `results/log20260606_215506_train_4gpu_batch16/`

@@ -20,6 +20,10 @@
 | 2026-06-02 | [asap-baseline-repro](experiments/2026-06-02-asap-baseline-repro/) | 复现ASAP在DGM4上的检测效果 | AUC=92.06%，作为后续baseline |
 | 2026-06-06 | [omnifd-asap-fusion](experiments/2026-06-06-omnifd-asap-fusion/) | 探索OmniFD人脸特征能否提升ASAP | 阴性结果，分数级融合AUC反降10.84% |
 | 2026-06-09 | [lr-batchsize-tamperdetector-ablation](experiments/2026-06-09-lr-batchsize-tamperdetector-ablation/) | lr缩放/VLM选择/TamperDetector消融 | lr缩放显著损害bbox定位(IoU -10~24%) |
+| 2026-07-21 | [omnifd-local-token-fusion](experiments/2026-07-21-omnifd-local-token-fusion/) | OmniFD局部token作为aggregator的额外key/value融合 | 阴性：test AUC +0.03，face_swap/face_attribute ACC 各−0.40 |
+| 2026-09-12 | [omnifd-residual-diagnosis](experiments/2026-09-12-omnifd-residual-diagnosis/) | 可学习alpha残差加和+随机噪声对照，诊断OmniFD特征是否有用 | alpha 0.91→1.78但val AUC −0.04→−0.30；噪声组AUC几乎相同 |
+| 2026-09-13 | [omnifd-boxselect-eval](experiments/2026-09-13-omnifd-boxselect-eval/) | 用OmniFD分数在候选人脸中挑篡改脸 | 严格选对率54.81%，低于“总选第一个框”65.85%（ASAP 84.52%） |
+| 2026-09-13 | [localization-task-nature](experiments/2026-09-13-localization-task-nature/) | 分析DGM4图像定位任务的性质 | gt 100%等于某个mtcnn框，每图2–5张脸，定位实为候选选择 |
 | 2026-10-07 | [asap-failure-analysis](experiments/2026-10-07-asap-failure-analysis/) | 分析ASAP在DGM4 test上的错误分布，决定后续路线 | orig误报占错误56%、纯图像漏检26%，物理侧约6成，先走物理路线 |
 
 ## 实验记录整理规范

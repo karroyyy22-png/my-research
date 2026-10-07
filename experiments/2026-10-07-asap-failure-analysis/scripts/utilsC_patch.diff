@@ -1,0 +1,20 @@
+--- models/ASAP.py.bak_before_utilsC	2026-10-07 14:37:54.303145743 +0900
++++ models/ASAP.py	2026-10-07 15:16:03.024094660 +0900
+@@ -127,7 +127,7 @@
+ 
+         self.norm_layer_it_cross_atten =nn.LayerNorm(text_width)
+         self.it_cross_attn = Multilmodelattention(text_width, 12)
+-        # self.UtilsC = nn.Parameter(torch.tensor(0.5))
++        self.UtilsC = nn.Parameter(torch.tensor(0.5))
+ 
+         # 临时占位：先用常数0.5，后面替换成真正的模型
+         # self.fake_s = 0.5
+@@ -501,7 +501,7 @@
+             logits_real_fake = self.itm_head(output_pos.last_hidden_state[:,0,:] + self.UtilsB * vision_feat)
+             ##================= MLC ========================## 
+             text_feat = output_pos.last_hidden_state[:,0,:]
+-            logits_multicls = self.cls_head(text_feat + self.UtilsB * vision_feat)
++            logits_multicls = self.cls_head(text_feat + self.UtilsC * vision_feat)
+             ##================= TMG ========================##   
+             input_ids = text.input_ids.clone()
+             logits_tok = self.text_encoder(input_ids, 

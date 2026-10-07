@@ -20,6 +20,7 @@
 | 2026-06-02 | [asap-baseline-repro](experiments/2026-06-02-asap-baseline-repro/) | 复现ASAP在DGM4上的检测效果 | AUC=92.06%，作为后续baseline |
 | 2026-06-06 | [omnifd-asap-fusion](experiments/2026-06-06-omnifd-asap-fusion/) | 探索OmniFD人脸特征能否提升ASAP | 阴性结果，分数级融合AUC反降10.84% |
 | 2026-06-09 | [lr-batchsize-tamperdetector-ablation](experiments/2026-06-09-lr-batchsize-tamperdetector-ablation/) | lr缩放/VLM选择/TamperDetector消融 | lr缩放显著损害bbox定位(IoU -10~24%) |
+| 2026-10-07 | [asap-failure-analysis](experiments/2026-10-07-asap-failure-analysis/) | 分析ASAP在DGM4 test上的错误分布，决定后续路线 | orig误报占错误56%、纯图像漏检26%，物理侧约6成，先走物理路线 |
 
 ## 实验记录整理规范
 新实验记录（不管是自己写还是用LLM整理）请遵循 [EXPERIMENT_LOGGING_GUIDE.md](EXPERIMENT_LOGGING_GUIDE.md) 里的格式规范。

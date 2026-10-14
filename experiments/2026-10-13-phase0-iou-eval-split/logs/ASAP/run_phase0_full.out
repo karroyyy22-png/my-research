@@ -1,0 +1,30 @@
+nohup: 入力を無視します
+commit: f9d2e97
+[2026-10-12 16:47:33] start none
+[2026-10-12 17:01:21] end none exit=0
+  期间被修改的文件:
+results/log20260602_134300_train_4gpu_batch16/eval_phase0_full_none/shell_all.txt
+results/log20260602_134300_train_4gpu_batch16/eval_phase0_full_none/raw_eval_data.npz
+results/log20260602_134300_train_4gpu_batch16/eval_phase0_full_none/phase0_split_none.json
+results/log20260602_134300_train_4gpu_batch16/eval_phase0_full_none/results_per_category_orig.json
+results/log20260602_134300_train_4gpu_batch16/eval_phase0_full_none/results_per_category.json
+results/log20260602_134300_train_4gpu_batch16/eval_phase0_full_none/results_all.txt
+[2026-10-12 17:01:22] start cscl
+[2026-10-12 17:15:26] end cscl exit=0
+  期间被修改的文件:
+results/log20260602_134300_train_4gpu_batch16/eval_phase0_full_cscl/shell_all.txt
+results/log20260602_134300_train_4gpu_batch16/eval_phase0_full_cscl/raw_eval_data.npz
+results/log20260602_134300_train_4gpu_batch16/eval_phase0_full_cscl/phase0_split_cscl.json
+results/log20260602_134300_train_4gpu_batch16/eval_phase0_full_cscl/results_per_category_orig.json
+results/log20260602_134300_train_4gpu_batch16/eval_phase0_full_cscl/results_per_category.json
+results/log20260602_134300_train_4gpu_batch16/eval_phase0_full_cscl/results_all.txt
+[2026-10-12 17:15:27] start zero
+[2026-10-12 17:29:12] end zero exit=0
+  期间被修改的文件:
+results/log20260602_134300_train_4gpu_batch16/eval_phase0_full_zero/shell_all.txt
+results/log20260602_134300_train_4gpu_batch16/eval_phase0_full_zero/raw_eval_data.npz
+results/log20260602_134300_train_4gpu_batch16/eval_phase0_full_zero/phase0_split_zero.json
+results/log20260602_134300_train_4gpu_batch16/eval_phase0_full_zero/results_per_category_orig.json
+results/log20260602_134300_train_4gpu_batch16/eval_phase0_full_zero/results_per_category.json
+results/log20260602_134300_train_4gpu_batch16/eval_phase0_full_zero/results_all.txt
+[2026-10-12 17:29:12] ALL DONE

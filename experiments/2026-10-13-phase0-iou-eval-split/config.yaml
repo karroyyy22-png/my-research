@@ -1,0 +1,56 @@
+# 阶段 0：官方 IoU 的拆分评测与 CSCL 框后处理的影响（评测实验，无训练）
+experiment: 2026-10-13-phase0-iou-eval-split
+dates: [2026-10-12, 2026-10-13]
+type: evaluation
+
+dataset:
+  name: DGM4
+  split: test
+  n_all: 50705
+  n_tampered: 26904      # 真值框非空（图像有 FS/FA 篡改）
+  n_untampered: 23801    # 真值框为空（orig + 纯文本篡改）
+
+box_postproc_modes:      # 作用在多标签头 FS/FA 的原始 logit 上
+  none: no zeroing
+  cscl: zero box if logit_FS < 0.5 and logit_FA < 0.5   # = CSCL 官方，概率阈值约 0.62
+  zero: zero box if logit_FS < 0.0 and logit_FA < 0.0   # 概率阈值 0.5
+
+iou_rule:
+  function: box_ops.box_iou(test=True)   # 官方实现，未修改
+  empty_pred: all xyxy coords < 1e-4
+  decomposition: "IoU_all = 0.5306 * IoU_tampered + 0.4694 * empty_rate_untampered"
+
+models:
+  ASAP:
+    repo: https://github.com/karroyyy22-png/ASAP
+    branch: exp/phase0-box-postproc
+    commit: f9d2e97
+    checkpoint: /nas/data_2/wanhongz/ASAP/results/log20260602_134300_train_4gpu_batch16/checkpoint_best.pth
+    train_data: train
+    config: configs/test.yaml
+    text_encoder: bert-base-uncased
+    batch_size_val: 64
+    host: s225
+    gpu: RTX A4000
+    modes_run: [none, cscl, zero]
+  CSCL:
+    repo: https://github.com/liyih/CSCL   # 本地 clone，无 push 权限
+    upstream_commit: 6467274
+    local_branch: phase0
+    commit: 4b49db1
+    checkpoint: /nas/data_2/wanhongz/CSCL/code/MultiModal-DeepFake-main/results/CSCL/checkpoint_49.pth
+    train_data: train+val
+    config: configs/test_phase0.yaml
+    text_encoder: roberta-base
+    batch_size_val: 32
+    host: prmigreen001
+    gpu: TITAN V 12GB
+    modes_run: [cscl, none]   # zero 中途被终止，无结果
+
+key_results:   # 全部 IoUmean / 篡改 IoUmean / 未篡改空框率
+  ASAP-none: [74.43, 68.90, 80.69]
+  ASAP-cscl: [75.94, 66.92, 86.15]
+  ASAP-zero: [75.98, 67.62, 85.42]
+  CSCL-none: [83.90, 76.66, 92.09]
+  CSCL-cscl: [84.09, 76.02, 93.21]
+  gap_CSCLcscl_vs_ASAPnone: {total: 9.66, tampered_side: 3.78, untampered_side: 5.88}

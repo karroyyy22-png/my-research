@@ -25,6 +25,7 @@
 | 2026-09-13 | [omnifd-boxselect-eval](experiments/2026-09-13-omnifd-boxselect-eval/) | 用OmniFD分数在候选人脸中挑篡改脸 | 严格选对率54.81%，低于“总选第一个框”65.85%（ASAP 84.52%） |
 | 2026-09-13 | [localization-task-nature](experiments/2026-09-13-localization-task-nature/) | 分析DGM4图像定位任务的性质 | gt 100%等于某个mtcnn框，每图2–5张脸，定位实为候选选择 |
 | 2026-10-07 | [asap-failure-analysis](experiments/2026-10-07-asap-failure-analysis/) | 分析ASAP在DGM4 test上的错误分布，决定后续路线 | orig误报占错误56%、纯图像漏检26%，物理侧约6成，先走物理路线 |
+| 2026-10-13 | [phase0-iou-eval-split](experiments/2026-10-13-phase0-iou-eval-split/) | 检验CSCL高IoU是否来自框后处理，并把官方IoU拆成篡改/未篡改两部分 | 后处理只±1.5；9.66分差距中未篡改侧5.88(61%)、篡改侧定位3.78(39%)，可进入阶段1 |
 
 ## 实验记录整理规范
 新实验记录（不管是自己写还是用LLM整理）请遵循 [EXPERIMENT_LOGGING_GUIDE.md](EXPERIMENT_LOGGING_GUIDE.md) 里的格式规范。

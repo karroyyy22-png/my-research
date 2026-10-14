@@ -1,0 +1,22 @@
+{
+  "model": "CSCL",
+  "box_postproc": "none",
+  "checkpoint": "CSCL/checkpoint_49.pth",
+  "n_all": 256,
+  "n_tampered": 142,
+  "n_untampered": 114,
+  "all_IoUmean": 84.24457886721939,
+  "all_IoU50": 91.40625,
+  "all_IoU75": 87.109375,
+  "tampered_IoUmean": 78.63811401414199,
+  "tampered_IoU50": 91.54929577464789,
+  "tampered_IoU75": 83.80281690140845,
+  "tampered_pred_empty_rate": 6.338028169014084,
+  "untampered_pred_empty_rate": 91.22807017543859,
+  "untampered_IoUmean": 91.22807017543859,
+  "cand_acc_tampered": 91.54929577464789,
+  "cand_meta_missing": 0,
+  "gt_norm_mismatch": 0,
+  "img_logit_min": -13.532459259033203,
+  "img_logit_max": 11.60909652709961
+}

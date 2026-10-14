@@ -1,0 +1,18 @@
+nohup: ignoring input
+host: prmigreen001  commit: 4b49db1
+[2026-10-13 14:08:14] start cscl (port 23459)
+[2026-10-13 14:08:44] start none (port 23460)
+[2026-10-13 14:09:14] start zero (port 23461)
+Terminated
+[2026-10-13 14:12:25] end zero exit=143
+[2026-10-13 14:36:14] end cscl exit=0
+[2026-10-13 14:37:10] end none exit=0
+[2026-10-13 14:37:10] ALL DONE
+期间被修改的文件:
+results/CSCL/eval_phase0_full_cscl/shell_all.txt
+results/CSCL/eval_phase0_full_cscl/phase0_split_cscl.json
+results/CSCL/eval_phase0_full_cscl/results_all.txt
+results/CSCL/eval_phase0_full_none/shell_all.txt
+results/CSCL/eval_phase0_full_none/phase0_split_none.json
+results/CSCL/eval_phase0_full_none/results_all.txt
+results/CSCL/eval_phase0_full_zero_ABORTED/shell_all.txt

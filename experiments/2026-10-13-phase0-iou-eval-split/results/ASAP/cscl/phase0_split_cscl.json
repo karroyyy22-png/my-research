@@ -1,0 +1,21 @@
+{
+  "box_postproc": "cscl",
+  "checkpoint": "log20260602_134300_train_4gpu_batch16/checkpoint_best.pth",
+  "n_all": 50705,
+  "n_tampered": 26904,
+  "n_untampered": 23801,
+  "all_IoUmean": 75.94487578778732,
+  "all_IoU50": 82.93659402425796,
+  "all_IoU75": 75.74203727443053,
+  "tampered_IoUmean": 66.91514000965493,
+  "tampered_IoU50": 80.09217960154625,
+  "tampered_IoU75": 66.53285756764792,
+  "tampered_pred_empty_rate": 13.458965209634254,
+  "untampered_pred_empty_rate": 86.15184235956472,
+  "untampered_IoUmean": 86.15184235956472,
+  "cand_acc_tampered": 81.81683021112103,
+  "cand_meta_missing": 0,
+  "gt_norm_mismatch": 0,
+  "img_logit_min": -15.466490745544434,
+  "img_logit_max": 12.093842506408691
+}

@@ -1,0 +1,53 @@
+******************************
+Namespace(box_postproc='cscl', checkpoint='', config='configs/test_phase0.yaml', device='cuda', dist_backend='nccl', dist_url='tcp://localhost:23459', distributed=False, eval_dirname='eval_phase0_full_cscl', gpu=0, launcher='pytorch', log=True, log_num='CSCL', max_samples=0, ngpus_per_node=1, output_dir='./results', rank=0, resume=False, seed=777, test_epoch='49', text_encoder='./roberta-base', world_size=1)
+******************************
+{'train_file': ['../../datasets/DGM4/metadata/train.json'], 'val_file': ['../../datasets/DGM4/metadata/test.json'], 'image_res': 256, 'vision_width': 768, 'embed_dim': 256, 'batch_size_train': 64, 'batch_size_val': 32, 'max_words': 50, 'loss_BIC_wgt': 1, 'loss_bbox_wgt': 0.1, 'loss_giou_wgt': 0.1, 'loss_MLC_wgt': 1, 'Loss_sim_wgt': 10, 'optimizer': {'opt': 'adamW', 'lr': 1e-05, 'lr_img': 5e-05, 'weight_decay': 0.02}, 'schedular': {'sched': 'cosine', 'lr': 1e-05, 'epochs': 50, 'min_lr': 1e-06, 'decay_rate': 1, 'warmup_lr': 1e-06, 'warmup_epochs': 10, 'cooldown_epochs': 0}}
+******************************
+Some weights of the model checkpoint at roberta-base were not used when initializing RobertaModel: ['lm_head.layer_norm.weight', 'lm_head.bias', 'lm_head.dense.bias', 'lm_head.layer_norm.bias', 'lm_head.decoder.weight', 'lm_head.dense.weight']
+- This IS expected if you are initializing RobertaModel from the checkpoint of a model trained on another task or with another architecture (e.g. initializing a BertForSequenceClassification model from a BertForPreTraining model).
+- This IS NOT expected if you are initializing RobertaModel from the checkpoint of a model that you expect to be exactly identical (initializing a BertForSequenceClassification model from a BertForSequenceClassification model).
+[W ProcessGroupNCCL.cpp:1569] Rank 0 using best-guess GPU 0 to perform barrier as devices used by this process are currently unknown. This can potentially cause a hang if this rank to GPU mapping is incorrect.Specify device_ids in barrier() to force use of a particular device.
+Some weights of the model checkpoint at roberta-base were not used when initializing RobertaModel: ['lm_head.layer_norm.weight', 'lm_head.bias', 'lm_head.dense.bias', 'lm_head.layer_norm.bias', 'lm_head.decoder.weight', 'lm_head.dense.weight']
+- This IS expected if you are initializing RobertaModel from the checkpoint of a model trained on another task or with another architecture (e.g. initializing a BertForSequenceClassification model from a BertForPreTraining model).
+- This IS NOT expected if you are initializing RobertaModel from the checkpoint of a model that you expect to be exactly identical (initializing a BertForSequenceClassification model from a BertForSequenceClassification model).
+tcp://localhost:23459, ws:1, rank:0
+Creating CSCL
+_IncompatibleKeys(missing_keys=['vit_model.visual.positional_embedding'], unexpected_keys=['mlm_score.bias', 'mlm_score.transform.dense.weight', 'mlm_score.transform.dense.bias', 'mlm_score.transform.LayerNorm.weight', 'mlm_score.transform.LayerNorm.bias', 'mlm_score.decoder.weight', 'itm_score.fc.weight', 'itm_score.fc.bias', 'vit_model.token_embedding.weight'])
+load checkpoint from ./results/CSCL/checkpoint_49.pth
+<All keys matched successfully>
+Creating dataset
+Start evaluation
+[phase0] box_postproc = cscl
+Computing features for evaluation...
+Evaluation:  [   0/1585]  eta: 0:29:23    time: 1.1126  data: 0.6212  max mem: 2179
+Evaluation:  [ 200/1585]  eta: 0:17:44    time: 1.5921  data: 0.0001  max mem: 2179
+Evaluation:  [ 400/1585]  eta: 0:19:17    time: 1.0671  data: 0.0001  max mem: 2180
+Evaluation:  [ 600/1585]  eta: 0:16:30    time: 1.0665  data: 0.0001  max mem: 2180
+Evaluation:  [ 800/1585]  eta: 0:13:21    time: 1.0666  data: 0.0001  max mem: 2180
+Evaluation:  [1000/1585]  eta: 0:10:02    time: 1.0661  data: 0.0001  max mem: 2180
+Evaluation:  [1200/1585]  eta: 0:06:38    time: 1.0615  data: 0.0001  max mem: 2180
+Evaluation:  [1400/1585]  eta: 0:03:12    time: 1.0621  data: 0.0001  max mem: 2180
+Evaluation:  [1584/1585]  eta: 0:00:01    time: 1.0537  data: 0.0001  max mem: 2180
+Evaluation: Total time: 0:27:32 (1.0425 s / it)
+[phase0] {
+  "model": "CSCL",
+  "box_postproc": "cscl",
+  "checkpoint": "CSCL/checkpoint_49.pth",
+  "n_all": 50705,
+  "n_tampered": 26904,
+  "n_untampered": 23801,
+  "all_IoUmean": 84.08679390843272,
+  "all_IoU50": 90.4762843900996,
+  "all_IoU75": 87.13736317917366,
+  "tampered_IoUmean": 76.01549528423585,
+  "tampered_IoU50": 88.05753791257806,
+  "tampered_IoU75": 81.7647933392804,
+  "tampered_pred_empty_rate": 9.37778768956289,
+  "untampered_pred_empty_rate": 93.21036931221377,
+  "untampered_IoUmean": 93.21036931221377,
+  "cand_acc_tampered": 88.473832887303,
+  "cand_meta_missing": 0,
+  "gt_norm_mismatch": 0,
+  "img_logit_min": -13.985530853271484,
+  "img_logit_max": 11.784510612487793
+}

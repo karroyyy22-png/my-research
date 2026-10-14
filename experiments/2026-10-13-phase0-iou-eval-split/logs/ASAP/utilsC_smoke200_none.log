@@ -1,0 +1,155 @@
+******************************
+Namespace(agg_func='Mean', bi_gru=False, box_postproc='none', checkpoint='', config='configs/test.yaml', cross_attn='i2t', device='cuda', dist_backend='nccl', dist_url='tcp://127.0.0.1:10031', distributed=False, eval_dirname='eval_phase0_utilsC_smoke200_none', gpu=0, lambda_lse=6.0, lambda_softmax=9.0, launcher='pytorch', log=True, log_num='log20260602_134300_train_4gpu_batch16', margin=0.1, max_samples=200, max_violation=False, model_save_epoch=5, ngpus_per_node=1, output_dir='results', precomp_enc_type='basic', rank=0, raw_feature_norm='softmax', resume=False, seed=777, test_epoch='best', text_encoder='bert-base-uncased', token_momentum=True, use_omni_fusion=False, use_omni_fusion_local=False, use_omni_fusion_residual=False, world_size=1)
+******************************
+{'alpha': 0.4, 'batch_size_train': 16, 'batch_size_val': 64, 'bert_config': 'configs/config_bert.json', 'embed_dim': 256, 'image_res': 256, 'label_smoothing': 0.0, 'loss_BIC_wgt': 1, 'loss_MAC_wgt': 0.1, 'loss_MLC_wgt': 1, 'loss_TMG_wgt': 1, 'loss_bbox_wgt': 0.1, 'loss_giou_wgt': 0.1, 'max_words': 50, 'momentum': 0.995, 'optimizer': {'lr': 2e-05, 'lr_img': 0.0001, 'opt': 'adamW', 'weight_decay': 0.02}, 'queue_size': 65536, 'schedular': {'cooldown_epochs': 0, 'decay_rate': 1, 'epochs': 50, 'lr': 2e-05, 'min_lr': 1e-06, 'sched': 'cosine', 'warmup_epochs': 10, 'warmup_lr': 1e-06}, 'temp': 0.07, 'train_file': ['/nas/data_2/wanhongz/datasets/DGM4/metadata/train.json'], 'val_file': ['/nas/data_2/wanhongz/datasets/DGM4/metadata/test.json'], 'vision_width': 768, 'vocab_size': 30522}
+******************************
+tcp://127.0.0.1:10031, ws:1, rank:0
+[OmniFD] 加载了 45264 条人脸伪造分数
+[Omni Fusion] loaded 45264 feature entries from /nas/data_2/wanhongz/ASAP/omnifd_test_feats.pt
+[Omni Fusion Local] loaded 45264 local-token entries from /nas/data_2/wanhongz/ASAP/omnifd_test_feats_local.pt
+[Omni Fusion Local] loaded 45264 hasface flags from /nas/data_2/wanhongz/ASAP/omnifd_test_hasface_local.pt
+Creating Model
+results/log20260602_134300_train_4gpu_batch16/checkpoint_best.pth
+load checkpoint from results/log20260602_134300_train_4gpu_batch16/checkpoint_best.pth
+_IncompatibleKeys(missing_keys=['omni_residual_alpha', 'omni_proj.weight', 'omni_proj.bias', 'omni_fusion_fc.weight', 'omni_fusion_fc.bias', 'omni_residual_proj.0.weight', 'omni_residual_proj.0.bias', 'omni_residual_proj.1.weight', 'omni_residual_proj.1.bias'], unexpected_keys=[])
+Creating dataset
+Start evaluation
+Computing features for evaluation...
+Evaluation:  [  0/793]  eta: 0:30:09    time: 2.2819  data: 0.6735  max mem: 2649
+[OmniFD融合] 共 256 张测试图，其中 142 张(人脸相关类别且查到分数)参与融合
+原始逐样本数据已保存
+
+[诊断] ASAP判断错误且有OmniFD分数的样本数: 13
+[诊断] 其中OmniFD判断正确的比例: 0.4615
+[phase0] {
+  "box_postproc": "none",
+  "checkpoint": "log20260602_134300_train_4gpu_batch16/checkpoint_best.pth",
+  "n_all": 256,
+  "n_tampered": 142,
+  "n_untampered": 114,
+  "all_IoUmean": 71.49091326864436,
+  "all_IoU50": 79.296875,
+  "all_IoU75": 71.875,
+  "tampered_IoUmean": 69.02587180826026,
+  "tampered_IoU50": 83.09859154929578,
+  "tampered_IoU75": 69.71830985915493,
+  "tampered_pred_empty_rate": 7.042253521126761,
+  "untampered_pred_empty_rate": 74.56140350877193,
+  "untampered_IoUmean": 74.56140350877193,
+  "cand_acc_tampered": 84.50704225352112,
+  "cand_meta_missing": 0,
+  "gt_norm_mismatch": 0,
+  "img_logit_min": -13.91651439666748,
+  "img_logit_max": 12.078866958618164
+}
+
+===== Per-Category Results (融合前 / 模型直接输出, Orig) =====
+(注: 若使用 --use_omni_fusion_local，这里的结果已包含token序列级融合效果；
+ 若未使用任何omni开关，这里就是纯ASAP基线)
+
+[orig] N=87
+  AUC=nan, ACC=0.7126, F1=0.0000
+  IoU=0.7471, IoU@50=0.7471, IoU@75=0.7471
+
+[face_swap] N=50
+  AUC=nan, ACC=0.8400, F1=0.9130
+  IoU=0.5901, IoU@50=0.7000, IoU@75=0.5600
+
+[face_attribute] N=49
+  AUC=nan, ACC=0.9388, F1=0.9684
+  IoU=0.7799, IoU@50=0.9388, IoU@75=0.7959
+
+[text_swap] N=21
+  AUC=nan, ACC=1.0000, F1=1.0000
+  IoU=0.7619, IoU@50=0.7619, IoU@75=0.7619
+
+[text_attribute] N=6
+  AUC=nan, ACC=1.0000, F1=1.0000
+  IoU=0.6667, IoU@50=0.6667, IoU@75=0.6667
+
+[face_swap&text_swap] N=15
+  AUC=nan, ACC=1.0000, F1=1.0000
+  IoU=0.8052, IoU@50=1.0000, IoU@75=0.8000
+
+[face_swap&text_attribute] N=8
+  AUC=nan, ACC=1.0000, F1=1.0000
+  IoU=0.8557, IoU@50=1.0000, IoU@75=1.0000
+
+[face_attribute&text_swap] N=18
+  AUC=nan, ACC=0.8889, F1=0.9412
+  IoU=0.5901, IoU@50=0.7222, IoU@75=0.6111
+
+[face_attribute&text_attribute] N=2
+  AUC=nan, ACC=1.0000, F1=1.0000
+  IoU=0.3750, IoU@50=0.5000, IoU@75=0.5000
+
+Per-category results (orig, 未经分数级融合) saved to results/log20260602_134300_train_4gpu_batch16/eval_phase0_utilsC_smoke200_none/results_per_category_orig.json
+
+===== 整体指标 (融合前 / 模型直接输出, Orig) =====
+AUC_cls_orig = 92.3077
+ACC_cls_orig = 85.1562
+EER_cls_orig = 18.3908
+
+===== Per-Category Results (融合后, Fused) =====
+
+[orig] N=87
+  AUC=nan, ACC=0.7126, F1=0.0000
+  IoU=0.7471, IoU@50=0.7471, IoU@75=0.7471
+
+[face_swap] N=50
+  AUC=nan, ACC=0.8400, F1=0.9130
+  IoU=0.5901, IoU@50=0.7000, IoU@75=0.5600
+
+[face_attribute] N=49
+  AUC=nan, ACC=0.9184, F1=0.9574
+  IoU=0.7799, IoU@50=0.9388, IoU@75=0.7959
+
+[text_swap] N=21
+  AUC=nan, ACC=1.0000, F1=1.0000
+  IoU=0.7619, IoU@50=0.7619, IoU@75=0.7619
+
+[text_attribute] N=6
+  AUC=nan, ACC=1.0000, F1=1.0000
+  IoU=0.6667, IoU@50=0.6667, IoU@75=0.6667
+
+[face_swap&text_swap] N=15
+  AUC=nan, ACC=1.0000, F1=1.0000
+  IoU=0.8052, IoU@50=1.0000, IoU@75=0.8000
+
+[face_swap&text_attribute] N=8
+  AUC=nan, ACC=1.0000, F1=1.0000
+  IoU=0.8557, IoU@50=1.0000, IoU@75=1.0000
+
+[face_attribute&text_swap] N=18
+  AUC=nan, ACC=0.8889, F1=0.9412
+  IoU=0.5901, IoU@50=0.7222, IoU@75=0.6111
+
+[face_attribute&text_attribute] N=2
+  AUC=nan, ACC=1.0000, F1=1.0000
+  IoU=0.3750, IoU@50=0.5000, IoU@75=0.5000
+
+Per-category results (fused) saved to results/log20260602_134300_train_4gpu_batch16/eval_phase0_utilsC_smoke200_none/results_per_category.json
+
+融合前后对比已保存到 results/log20260602_134300_train_4gpu_batch16/eval_phase0_utilsC_smoke200_none/results_all.txt
+======================================================================
+OmniFD 融合前后指标对比 (alpha=0.50)
+参与融合样本数: 142 / 256 (仅face_swap/face_attribute及其混合类别)
+======================================================================
+AUC_cls               Before= 92.3077  After= 76.2872  Delta=-16.0205
+ACC_cls               Before= 85.1562  After= 84.7656  Delta=-0.3906
+EER_cls               Before= 18.3908  After= 28.7356  Delta=+10.3448
+F1_FS                 Before= 91.3043  After= 91.3043  Delta=+0.0000
+F1_FA                 Before= 96.8421  After= 95.7447  Delta=-1.0974
+F1_TS                 Before=100.0000  After=100.0000  Delta=+0.0000
+F1_TA                 Before=100.0000  After=100.0000  Delta=+0.0000
+----------------------------------------------------------------------
+以下指标不受OmniFD融合影响（记录作为参照）：
+IOU_score            = 71.4909
+IOU_ACC_50            = 79.2969
+IOU_ACC_75            = 71.8750
+IOU_ACC_95            = 34.3750
+MAP                   = 86.3999
+OF1 / CF1             = 80.8314 / 81.1948
+ACC_tok / F1_tok      = 90.5671 / 66.1842
+======================================================================
+save result to: results/log20260602_134300_train_4gpu_batch16/eval_phase0_utilsC_smoke200_none/results_all.txt

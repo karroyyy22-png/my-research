@@ -18,6 +18,10 @@
 
 指标：Immerkaer 噪声 σ（全图、最大脸）、Laplacian 方差、由量化表反推的 JPEG 质量、bytes/px。
 
+另有 `scripts/verify_pairs.py`（只用 CPU、不改输入）：针对审查页面的配对 5 / 9 / 22 / 29，
+利用 DGM4 的数据结构做天然对照——text_swap/text_attribute 样本沿用原图、face_swap/face_attribute 样本沿用原 caption，
+检查误报"跟着图片走"还是"跟着 caption 走"；判定标准写在脚本开头，跑之前定好。
+
 ## 参数配置
 分析实验，无训练参数。`--n_fake 5000 --workers 8 --twin_jaccard 0.8`；图像根目录 `IMG_ROOT`（默认 `/nas/data_2/wanhongz/datasets`）。
 

@@ -1,0 +1,4 @@
+layer,n,share_of_errors9,n_also_wrong_6class,top3
+a.真伪错误,1693,0.5398596938775511,1693,orig→FS n=386; FS→orig n=346; TS→orig n=224
+b.模态错误,1079,0.3440688775510204,1079,FS&TS→FS n=153; FS→FS&TS n=121; FA&TS→FA n=111
+c.子类型错误,364,0.11607142857142858,258,FA→FS n=172; FS→FA n=61; FA&TS→FS&TS n=31

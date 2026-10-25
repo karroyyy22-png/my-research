@@ -1,0 +1,31 @@
+{
+  "axes": {
+    "img_axis_acc": 0.8227985405778523,
+    "txt_axis_acc": 0.8731091608322651,
+    "both_acc": 0.7209348190513756,
+    "acc_9": 0.7209348190513756,
+    "both_over_product": 1.0035382805150694
+  },
+  "questions": {
+    "n_orig": 16876,
+    "orig_to_FS": 1584,
+    "orig_to_FA": 777,
+    "orig_to_FS_or_FA_rate": 0.13990282057359563,
+    "orig_to_any_fake": 3517,
+    "orig_to_any_image_tamper": 2580,
+    "n_TS": 4952,
+    "TS_to_orig": 956,
+    "TS_to_orig_rate": 0.19305331179321486,
+    "TS_to_TA": 62,
+    "TS_to_TA_rate": 0.012520193861066236,
+    "n_TA": 1973,
+    "TA_to_TS": 42,
+    "TA_to_TS_rate": 0.021287379624936646,
+    "TA_to_orig": 339,
+    "n_mixed": 7468,
+    "mixed_to_image_only": 1707,
+    "mixed_to_text_only": 694,
+    "mixed_to_single_rate": 0.32150508837707553,
+    "mixed_to_orig": 204
+  }
+}

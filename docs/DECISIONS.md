@@ -6,10 +6,10 @@
 - 路径前缀与 `PROJECT_OVERVIEW.md` 相同：**A:** = `experiments/2026-10-25-asap-dgm4-6class-decoder-diag/results/`，**B:** = `experiments/2026-10-15-orig-fp-lowlevel-probe/results/`。
 - 本文件中的数字由 `scripts/verify_overview.py` 一并核对。
 
-## 2026-10-25 解码规则（A / B / C_LR 及其变体）没有实质收益，缺陷在表征层面
+## 2026-10-25 换解码规则（A/B/C_LR 及其变体）没有实质收益
 - 决定：不再在解码规则上找改进。
 - 依据：9 个解码器 test 六类 Macro-F1 0.706–0.711（`A:E01/E01_test_decoders_main.csv`）。A 阶段 README “分析与结论”中，A_tuned 对 A_untuned、B_tuned 对 B_b0、B 对 A、温度缩放都是 证据不足；C_LR 高于 A_tuned 为支持，但幅度很小（`A:E01/E01_val_holdout_paired_bootstrap.csv`）。
-- “缺陷在表征层面”这一表述：来自讨论，仓库无对应记录。仓库里能支持的只是“换解码规则没有可分辨的收益”；弱点汇总明确不对模型内部机制下结论。
+- 换解码规则（A/B/C_LR 及其变体）没有实质收益（依据：A 阶段 E01–E03）。'缺陷在表征层面'只是一种解释，未经检验，没有读模型代码，不对内部机制下结论。
 
 ## 2026-10-25 “文本轴没有提升”改为“证据不足”
 - 决定：Mixed 样本与对应单类样本之间的单轴召回比较，结论写作 证据不足，不写“没有提升”。

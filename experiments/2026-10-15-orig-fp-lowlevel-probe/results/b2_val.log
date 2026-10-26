@@ -1,0 +1,18 @@
+[frozen] sha256=2bb5e678a97089f80d2059c748b378321e9ccd2bb0196da30e316add85658579
+[align] {'n_all': 11066, 'n_word_count_mismatch': 0, 'n_text_tampered': 2935, 'n_gt_vs_toklabel_mismatch': 0, 'n_empty_gt': 0}
+[miss] {"n_text_tampered": 2935, "n_miss": 801, "miss_rate": 0.2729131175468484, "by_cls": {"face_attribute&text_attribute": {"n": 244, "miss_rate": 0.1680327868852459}, "face_attribute&text_swap": {"n": 482, "miss_rate": 0.2800829875518672}, "face_swap&text_attribute": {"n": 267, "miss_rate": 0.20599250936329588}, "face_swap&text_swap": {"n": 582, "miss_rate": 0.3161512027491409}, "text_attribute": {"n": 413, "miss_rate": 0.23728813559322035}, "text_swap": {"n": 947, "miss_rate": 0.3041182682154171}}}
+ n_pos  n_neg  n_ids      auc    ci_lo    ci_hi verdict
+  2935   8131   6582 0.900374 0.893244 0.906915      支持
+ target_fpr  threshold  actual_fpr      tpr
+       0.01   0.999972    0.010085 0.264395
+       0.05   0.990061    0.050055 0.648382
+       0.10   0.094124    0.099988 0.768313
+           feature  n_miss  n_detected  mean_miss  mean_detected  median_miss  median_detected      auc    ci_lo    ci_hi    p_mwu   p_holm verdict verdict_holm
+   fake_word_ratio     801        2134   0.507961       0.458631     0.608696          0.58114 0.542839 0.520741 0.566132 0.000342 0.001366     不支持          不支持
+      n_fake_words     801        2134   9.379526       9.006092    10.000000          9.00000 0.521460 0.501243 0.542635 0.071599 0.214798     不支持          不支持
+   sentence_length     801        2134  17.965044      18.310216    18.000000         18.00000 0.485114 0.461212 0.507969 0.212887 0.219254     不支持          不支持
+first_fake_rel_pos     801        2134   0.176985       0.164225     0.090909          0.06250 0.518278 0.495575 0.540052 0.109627 0.219254     不支持          不支持
+   group    n  n_hit  frac_hit    ci_lo    ci_hi  frac_any_pred_word verdict
+    miss  801     83  0.103620 0.083124 0.125317            0.106117    证据不足
+detected 2134   2121  0.993908 0.990200 0.997144            0.996251    仅作参照
+[done] /nas/data_2/wanhongz/my-research/experiments/2026-10-15-orig-fp-lowlevel-probe/results/B2/val  frozen_sha256=2bb5e678a97089f80d2059c748b378321e9ccd2bb0196da30e316add85658579

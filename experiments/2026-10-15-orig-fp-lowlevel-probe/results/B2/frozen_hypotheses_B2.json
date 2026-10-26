@@ -1,0 +1,63 @@
+{
+ "version": 1,
+ "frozen_at": "2026-10-26",
+ "scope": "B2：ASAP 在 DGM4 上文本篡改（TS/TA）漏检分析。本文件提交之前不运行任何 B2 分析。",
+ "总体设定": "文本篡改样本=真值含 TS 或 TA（TS、TA、Mixed 的文本部分）；文本无篡改样本=Original、FS、FA；漏检=文本篡改样本在 A_tuned 解码后文本轴被判\"无\"。主检验用 val_holdout，test 只重复一次，不用来选规则；bootstrap 按 id 聚类，1000 次，seed 2026。",
+ "H-T1": "文本得分 s=max(p_TS,p_TA)，文本篡改 vs 无篡改的 AUC。≥0.90 支持；0.75–0.90 证据不足；<0.75 不支持。另报 FPR=1%、5%、10% 时的 TPR（只描述）。",
+ "H-T2": "在文本篡改样本里，漏检 vs 检出的 AUC，特征为篡改词占比（预测漏检组更低）、篡改词数、句子长度、首个篡改词相对位置。≤0.40 支持；0.40–0.45 证据不足；>0.45 不支持；≥0.60 方向相反。4 个特征做 Holm，未校正与校正都报。",
+ "H-T3": "漏检样本中至少命中 1 个真篡改词的比例。≥30% 支持；≤10% 不支持；其间证据不足。检出组同一比例仅作参照。",
+ "H-T3_testability": "可检验。依据（步骤 0，只读核查）：pred_fake_words 由 TMG 词元头独立给出，不依赖句子头（二分类头或多标签头）的判定——ASAP models/ASAP.py 推理分支对每个样本都计算 logits_tok；导出脚本 2026-10-07-asap-failure-analysis/scripts/export_preds.py 第 133–159 行对每个样本取 argmax==1 的 token，经 tokenizer word_ids 映射为词序号（pred_fake_words = sorted(set(word_id[tok_pred==1]) - {-1})），无任何按 prob_fake 或 prob_mc 的门控。",
+ "operationalization（补充，不改上面措辞）": {
+  "inputs": {
+   "preds": "/nas/data_2/wanhongz/failure_analysis/preds_{val,test}_all.pkl（UtilsC 修补后；禁止 preds_test_all_preUtilsC.pkl）",
+   "preds_sha256": {
+    "val": "6deb3ae16b4fc312dd519681f31ad6dba8699183baf205c39c6afafde682f570",
+    "test": "70333256ab880e9aef56f3711994e4144b4380d5a41fbd2dc1c429fd2f3d254f"
+   },
+   "metadata": "/nas/data_2/wanhongz/datasets/DGM4/metadata/{val,test}.json（id 用于聚类；text 用于句子长度）",
+   "A_tuned": "分支 exp/6class-decoder-diag 提交 8ebbb87 的 experiments/2026-10-25-asap-dgm4-6class-decoder-diag/results/E01/E01_{val_holdout,test}_preds9.csv.gz 中 A_tuned 列（九类索引，CLASSES9 顺序；t_b=0.86, t_m=0.71，见该目录 results/frozen_config.json）。用 git show 读取，不切换分支",
+   "A_tuned_sha256": {
+    "E01_val_holdout_preds9.csv.gz": "364c60268d923f9254c7395a81d47af03bd494f30de74d172efa13a4ce0691fa",
+    "E01_test_preds9.csv.gz": "8de30d86476647ab4534da0965ad4e61238b6cc2300fc7bc59cbfa0e30ac47dc"
+   },
+   "val_holdout": "同一分支同一目录 results/split_val.json 的 val_holdout（meta_index 清单，n=11066；按 fake_cls 分层、每类 np.random.RandomState(2026).permutation 后前 floor(n/2) 为 val_dev、其余为 val_holdout；由 scripts/split_val.py 生成）。sha256 3d37b946c68dc354d5f716abc96f96bc1d7af2d64e9463b089c7b8588ef43ea3"
+  },
+  "labels": {
+   "text_tampered": "target_mc 的 TS 或 TA 维为 1（等价于 fake_cls 含 text_swap 或 text_attribute）",
+   "text_clean": "target_mc 的 TS、TA 维都为 0（orig、face_swap、face_attribute）",
+   "miss": "文本篡改样本中，A_tuned 九类索引的文本轴为 none（九类索引 ∈ {0,1,2}，即 orig/FS/FA）；detected = 其余文本篡改样本"
+  },
+  "H-T1": {
+   "score": "s = max(prob_mc[:,2], prob_mc[:,3])（prob_mc 列顺序 FS,FA,TS,TA）",
+   "auc": "文本篡改为正类，s 为得分（Mann-Whitney 形式，平局记 0.5）",
+   "verdict_on": "val_holdout 的 AUC 点估计；同时报告 id 聚类 bootstrap 95% CI",
+   "tpr_at_fpr": "对每个目标 FPR∈{0.01,0.05,0.10}：阈值取文本无篡改样本 s 的 (1−FPR) 分位数，判正为 s > 阈值；报告该阈值、实际 FPR 与 TPR（只描述）"
+  },
+  "H-T2": {
+   "words": "caption = ASAP dataset/utils.py 的 pre_caption(text, max_words=50)；words = caption.split(' ')；n_words = len(words)",
+   "features": {
+    "fake_word_ratio": "len(gt_fake_words) / n_words",
+    "n_fake_words": "len(gt_fake_words)",
+    "sentence_length": "n_words",
+    "first_fake_rel_pos": "min(gt_fake_words) / n_words"
+   },
+   "auc": "漏检为正类、特征值为得分；p 值为 Mann-Whitney U 双侧",
+   "direction_note": "原文只对篡改词占比写明预测方向（漏检组更低）；判据阈值按原文对 4 个特征统一适用（AUC 以漏检为正类，≤0.40 即漏检组更低）",
+   "verdict_order": "AUC ≥0.60 → 方向相反；否则 ≤0.40 → 支持；0.40<AUC≤0.45 → 证据不足；>0.45 → 不支持",
+   "holm": "4 个特征的 Mann-Whitney p 值做 Holm 校正。未校正版：“支持”与“方向相反”另需未校正 p<0.05，否则记“证据不足”；校正版：同上但用 Holm p<0.05。两版并列",
+   "ci": "AUC 的 id 聚类 bootstrap 95% CI，只报告"
+  },
+  "H-T3": {
+   "hit": "set(pred_fake_words) ∩ set(gt_fake_words) 非空。两者在同一词序号空间：gt_fake_words 来自 metadata fake_text_pos（pre_caption 后按空格切词的序号），pred_fake_words 来自 tokenizer word_ids；ASAP 训练与评测用同一映射（test.py text_input_adjust）",
+   "alignment_check_step0": "val 全部 22126 条：BERT word_ids 的词数与 pre_caption 空格词数全部一致；5866 条文本篡改样本中 tok_label 映射回的词与 gt_fake_words 全部一致；无篡改词位置 ≥50 被截断。val/test 文本篡改样本均无空 fake_text_pos。test 在运行时重复同一检查并报告",
+   "verdict_on": "val_holdout 漏检组比例的点估计；id 聚类 bootstrap 95% CI 只报告；检出组比例仅作参照"
+  },
+  "bootstrap": {
+   "B": 1000,
+   "seed": 2026,
+   "cluster": "metadata 的 id",
+   "ci": "percentile 95%"
+  },
+  "test_rule": "val_holdout 结果报告并经用户确认后，test 只运行一次，不改任何定义或判据"
+ }
+}

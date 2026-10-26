@@ -26,6 +26,8 @@
 | 2026-09-13 | [localization-task-nature](experiments/2026-09-13-localization-task-nature/) | 分析DGM4图像定位任务的性质 | gt 100%等于某个mtcnn框，每图2–5张脸，定位实为候选选择 |
 | 2026-10-07 | [asap-failure-analysis](experiments/2026-10-07-asap-failure-analysis/) | 分析ASAP在DGM4 test上的错误分布，决定后续路线 | orig误报占错误56%、纯图像漏检26%，物理侧约6成，先走物理路线 |
 | 2026-10-13 | [phase0-iou-eval-split](experiments/2026-10-13-phase0-iou-eval-split/) | 检验CSCL高IoU是否来自框后处理，并把官方IoU拆成篡改/未篡改两部分 | 后处理只±1.5；9.66分差距中未篡改侧5.88(61%)、篡改侧定位3.78(39%)，可进入阶段1 |
+| 2026-10-15 | [orig-fp-lowlevel-probe](experiments/2026-10-15-orig-fp-lowlevel-probe/) | B阶段（冻结假设，val主检验、test重复）：orig误报与低层画质(H1)、同id兄弟(V0–V2)、face_bg_ratio(H2)；文本篡改漏检(B2) | H1 支持0/证据不足5/不支持2；V0 A组test支持(+71.6pp)；H2三项test确认、效应小(H2-1 AUC 0.481)；B2 test漏检25.1%，H-T1支持(AUC 0.9125)、H-T2不支持、H-T3证据不足(11.9%) |
+| 2026-10-26 | [asap-dgm4-weakness-summary](experiments/2026-10-26-asap-dgm4-weakness-summary/) | 汇总ASAP在DGM4六分类上目前发现的弱点（只汇总A/B阶段冻结结果） | orig误报24.1%、文本漏检25.1%、图像漏检12.8%、Mixed折叠32.2%(A_tuned)；原因均未知 |
 
 ## 实验记录整理规范
 新实验记录（不管是自己写还是用LLM整理）请遵循 [EXPERIMENT_LOGGING_GUIDE.md](EXPERIMENT_LOGGING_GUIDE.md) 里的格式规范。

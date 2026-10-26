@@ -1,0 +1,3 @@
+comparison,pred_dir,n_pos,n_neg,coef_adj,ci_lo,ci_hi,auc_unadjusted,direction_agrees_with_unadjusted,label,split,frozen_sha256
+H2-2 FS+FA vs 未改图,-1,8787,7975,-0.2893288917142716,-0.3139984986523476,-0.2657139589023973,0.4121381936053296,True,补充，不参与确认判定（控制 log1p(max_face)、log(W*H)）,val,490a02f41bb810c60e899e4b36cd4f2ab92023224f5c09c29ef9e0d8c593cab5
+H2-3 漏检 FA vs 检出 FA,1,304,3695,0.2449632313424208,0.13230066380228514,0.36277952398168123,0.5860996367780072,True,补充，不参与确认判定（控制 log1p(max_face)、log(W*H)）,val,490a02f41bb810c60e899e4b36cd4f2ab92023224f5c09c29ef9e0d8c593cab5

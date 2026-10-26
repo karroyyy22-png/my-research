@@ -1,0 +1,4 @@
+[frozen] sha256=490a02f41bb810c60e899e4b36cd4f2ab92023224f5c09c29ef9e0d8c593cab5
+[img] 45264 张唯一图像, workers=4
+[done] /nas/data_2/wanhongz/my-research/experiments/2026-10-15-orig-fp-lowlevel-probe/results/B1/test  frozen_sha256=490a02f41bb810c60e899e4b36cd4f2ab92023224f5c09c29ef9e0d8c593cab5
+exit=0

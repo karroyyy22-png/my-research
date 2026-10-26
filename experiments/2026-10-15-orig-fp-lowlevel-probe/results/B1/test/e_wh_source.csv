@@ -1,0 +1,2 @@
+n_unaltered_images,n_keys,n_pure_keys,coverage_unaltered,inference_enabled,coverage_fs_fa_mixed,rule
+18360,717,12,0.5944444444444444,True,0.6383809099018734,"B1(e)：在该 split 的 orig/TS/TA 唯一图像上统计 (W,H)→来源。逐个 (W,H) 判断：该键下 n>=20 且众数来源占比 >=0.95 才视为纯，可为 FS/FA/Mixed 推断来源；其余键不推断（记 unknown）。推断结果单列为 source_inferred，另有 source_is_inferred 标记，并报告覆盖率（FS/FA/Mixed 中被推断的比例）。若纯键覆盖 orig/TS/TA 图像不足 50%，判定整体不纯，不做任何推断。"

@@ -1,0 +1,4 @@
+scope,n_fp,n_matched,n_dropped,match_rate
+"secondary(source,W,H):usa_today",321,239,82,0.7445482866043613
+"secondary(source,W,H):washington_post",372,302,70,0.8118279569892473
+"secondary(source,W,H):pooled",693,541,152,0.7806637806637806

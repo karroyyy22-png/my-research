@@ -1,0 +1,15 @@
+# frozen_hypotheses.json 哈希链（完整 sha256）
+# v1–v6 的哈希来自冻结文件的 changelog，git 历史里只有 v7，无法独立重新计算。
+# 来源：v1–v6 取自当前 frozen_hypotheses.json 的 changelog（v1 的键为 "v1"，v2–v6 的键为 "vN_sha256"）；
+#   git 历史中该文件只有一个版本（首次提交 53342eb，即 v7），v1–v6 的文件内容不在 git 中，无法对其重新计算哈希。
+# v7：当前文件的 sha256，与 results/frozen_hypotheses.sha256 及 53342eb 中的文件一致。
+# 比对对象：用户 2026-10-26 给出的参考值（v1–v6 完整值，v7 前缀 490a02f4）。
+# 更正：本文件上一版（594b5ce）把 v3 标为“与用户列表不一致”，比对的是更早一份列表（原值未记录）；与本次参考值比对，v3 一致。
+版本	sha256	与用户参考值比对
+v1	95a10e42e1d72dfc19658a245ad7d48d20863916c5a6421cbf7b3991f23b6d30	一致
+v2	e460355fda72f5b6b940a3a3f7db074322a581d43a731ddc24100027dbfad177	一致
+v3	78ed174946b62514ba3d88a7af99b667b5dbf4b763fb61c865ef90f9fb83ab56	一致
+v4	4086f9113ddbaced3692ec0e0b8e22ea50d23eb69bff2a29d0fb661934eb96c9	一致
+v5	4ecf0cc6db2975bd0091a2252c21245ab5818613f3eccd640121564393b36a3a	一致
+v6	1c0d7c72f7a826fd21b5f32eb836aa5cc2acac8db2816eeec97d216d551a6787	一致
+v7	490a02f41bb810c60e899e4b36cd4f2ab92023224f5c09c29ef9e0d8c593cab5	一致（前缀 490a02f4）

@@ -1,0 +1,25 @@
+contrast,feature,n_manip,n_unaltered,auc_manip,smd,note
+FS vs unaltered(orig/TS/TA unique images),lap_var,320,674,0.49800166913946586,0.012560226273338259,
+FS vs unaltered(orig/TS/TA unique images),noise_sigma,320,674,0.49897533382789316,-0.01304208417081658,
+FS vs unaltered(orig/TS/TA unique images),noise_sigma_flat,320,674,0.47841246290801187,-0.05274475347126999,
+FS vs unaltered(orig/TS/TA unique images),jpeg_q,320,674,,,常数，不可检验
+FS vs unaltered(orig/TS/TA unique images),bytes_per_px,320,674,0.47546364985163203,-0.10246000411220485,生成/重编码过程的痕迹（不解读为模型捷径）
+FS vs unaltered(orig/TS/TA unique images),mean_saturation,320,674,0.5171457715133532,0.052448569778680294,
+FS vs unaltered(orig/TS/TA unique images),near_gray,320,674,0.5034402818991098,0.05599129407115876,
+FS vs unaltered(orig/TS/TA unique images),bright_mean,320,674,0.5289549332344213,0.09434332382415776,
+FS vs unaltered(orig/TS/TA unique images),bright_std,320,674,0.512022440652819,0.043349694855436334,
+FS vs unaltered(orig/TS/TA unique images),face_lap_var,320,674,0.4557446216617211,-0.15757835015611724,
+FS vs unaltered(orig/TS/TA unique images),face_noise_sigma,320,674,0.4628523738872404,-0.10698940620789,
+FS vs unaltered(orig/TS/TA unique images),face_bg_ratio,320,674,0.403964206231454,-0.3170480474853806,
+FA vs unaltered(orig/TS/TA unique images),lap_var,268,674,0.49311306966650426,-0.05633656100718595,
+FA vs unaltered(orig/TS/TA unique images),noise_sigma,268,674,0.497746800124009,-0.00715283782552952,
+FA vs unaltered(orig/TS/TA unique images),noise_sigma_flat,268,674,0.4540446875415209,-0.014108452092948157,
+FA vs unaltered(orig/TS/TA unique images),jpeg_q,268,674,,,常数，不可检验
+FA vs unaltered(orig/TS/TA unique images),bytes_per_px,268,674,0.4339790291864122,-0.17429255917667832,生成/重编码过程的痕迹（不解读为模型捷径）
+FA vs unaltered(orig/TS/TA unique images),mean_saturation,268,674,0.501372957172594,-0.019479544067519325,
+FA vs unaltered(orig/TS/TA unique images),near_gray,268,674,0.5127219983170203,0.1645806803618611,
+FA vs unaltered(orig/TS/TA unique images),bright_mean,268,674,0.43794012135169846,-0.20772865407749241,
+FA vs unaltered(orig/TS/TA unique images),bright_std,268,674,0.453956109659418,-0.16100414282732659,
+FA vs unaltered(orig/TS/TA unique images),face_lap_var,268,674,0.46668918021170114,-0.15598976511938978,
+FA vs unaltered(orig/TS/TA unique images),face_noise_sigma,268,674,0.4693077638513663,-0.07955500642799238,
+FA vs unaltered(orig/TS/TA unique images),face_bg_ratio,268,674,0.4282629877319633,-0.23391478368228494,

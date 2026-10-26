@@ -1,0 +1,11 @@
+scope,n_fp,n_tn,n_matched,match_rate,n_dropped
+full_split_covariates_only,1889,5584.0,1560,0.8258337744838539,
+full_split_covariates_only:bbc,351,,326,0.9287749287749287,25.0
+full_split_covariates_only:guardian,845,,790,0.9349112426035503,55.0
+full_split_covariates_only:usa_today,321,,186,0.5794392523364486,135.0
+full_split_covariates_only:washington_post,372,,258,0.6935483870967742,114.0
+this_run,1889,5584.0,1560,0.8258337744838539,
+this_run:bbc,351,,326,0.9287749287749287,25.0
+this_run:guardian,845,,790,0.9349112426035503,55.0
+this_run:usa_today,321,,186,0.5794392523364486,135.0
+this_run:washington_post,372,,258,0.6935483870967742,114.0

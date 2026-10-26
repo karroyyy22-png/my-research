@@ -1,0 +1,20 @@
+[frozen] sha256=490a02f41bb810c60e899e4b36cd4f2ab92023224f5c09c29ef9e0d8c593cab5
+         feature       kind  pred_dir  val_auc  val_auc_ci_lo  val_auc_ci_hi  val_coef  test_auc       verdict  verdict_holm ci_in_045_055
+         lap_var   directed      -1.0    0.452          0.431          0.472    -0.260     0.464  insufficient  insufficient           NaN
+     noise_sigma   directed       1.0    0.467          0.445          0.487     0.037     0.479  insufficient  insufficient           NaN
+noise_sigma_flat   directed       1.0    0.527          0.507          0.545     0.259     0.521 not_supported not_supported           NaN
+    bytes_per_px undirected       0.0    0.501          0.482          0.521     0.114     0.503        无可分辨差异        无可分辨差异  val=是;test=是
+ mean_saturation   directed      -1.0    0.434          0.414          0.455    -0.236     0.446  insufficient  insufficient           NaN
+       near_gray   directed       1.0    0.499          0.495          0.503    -0.002     0.500 not_supported not_supported           NaN
+     bright_mean undirected       0.0    0.481          0.460          0.502    -0.060     0.477        无可分辨差异        无可分辨差异  val=是;test=是
+      bright_std undirected       0.0    0.448          0.427          0.467    -0.189     0.449        无可分辨差异        无可分辨差异  val=否;test=否
+    face_lap_var   directed      -1.0    0.436          0.416          0.456    -0.312     0.454  insufficient  insufficient           NaN
+face_noise_sigma   directed       1.0    0.454          0.432          0.474    -0.076     0.471  insufficient  insufficient           NaN
+   face_bg_ratio undirected       0.0    0.470          0.451          0.489    -0.112     0.481        无可分辨差异        无可分辨差异  val=是;test=是
+          jpeg_q   constant       NaN      NaN            NaN            NaN       NaN       NaN      不可检验（常数）      不可检验（常数）           NaN
+verdict
+insufficient     5
+not_supported    2
+verdict
+无可分辨差异    4
+[done] results/B1_verdict/val_v5+test/h1_verdict.csv  frozen_sha256=490a02f41bb810c60e899e4b36cd4f2ab92023224f5c09c29ef9e0d8c593cab5

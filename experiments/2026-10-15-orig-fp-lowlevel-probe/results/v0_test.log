@@ -1,0 +1,18 @@
+[frozen] sha256=490a02f41bb810c60e899e4b36cd4f2ab92023224f5c09c29ef9e0d8c593cab5
+         n  has_img_sib  img_sib_img_alarm  has_txt_sib  txt_sib_txt_alarm
+grp                                                                       
+A     2558       0.2529             0.7883       0.8659             0.0309
+B      970       0.4371             0.0389       0.8247             0.8612
+C      267       0.3258             0.6437       0.8764             0.8077
+D      276       0.3080             0.1824       0.8261             0.1228
+TN   12805       0.3035             0.0722       0.8412             0.0217
+split                       test  n_fp_with_sib  n_tn_with_sib  rate_fp  rate_tn   diff  ci_lo  ci_hi                                      verdict                                                    frozen_sha256
+ test A vs TN: img_sib_img_alarm            647           3886   0.7883   0.0722 0.7161 0.6837 0.7487                                           支持 490a02f41bb810c60e899e4b36cd4f2ab92023224f5c09c29ef9e0d8c593cab5
+ test B vs TN: txt_sib_txt_alarm            800          10771   0.8612   0.0217 0.8396 0.8155 0.8625 仅描述（同句兄弟与原图只在人脸区域不同，背景相同，文本维报警不能归因于 caption） 490a02f41bb810c60e899e4b36cd4f2ab92023224f5c09c29ef9e0d8c593cab5
+[done] /nas/data_2/wanhongz/my-research/experiments/2026-10-15-orig-fp-lowlevel-probe/results/B1_V0/test  frozen_sha256=490a02f41bb810c60e899e4b36cd4f2ab92023224f5c09c29ef9e0d8c593cab5
+exit=0
+[frozen] sha256=490a02f41bb810c60e899e4b36cd4f2ab92023224f5c09c29ef9e0d8c593cab5
+split  sibling_class  n_A_with_sib  n_TN_with_sib  rate_A  rate_TN   diff  ci_lo  ci_hi     label
+ test      text_swap           446           2697  0.7780   0.0734 0.7046 0.6613 0.7413 事后描述，不作判定
+ test text_attribute           232           1405  0.8017   0.0662 0.7355 0.6817 0.7923 事后描述，不作判定
+exit=0

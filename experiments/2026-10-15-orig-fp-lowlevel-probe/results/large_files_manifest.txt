@@ -1,0 +1,11 @@
+# 超过 5MB 的结果原文件；路径相对实验目录；MB = bytes/2^20
+# 更正：results/B1/test/per_sample.csv 实际 14.0MB（此前记录的约 6.0MB 有误；约 6.1MB 的是 val 与 val_v5 的 per_sample.csv）
+path	bytes	MB	rows(含表头)	sha256	入库方式
+results/B1/test/features_per_image.csv	13106683	12.5	45265	ff6cf91577ce5a39cb349f12bb5b2c378f317066d1d72f7289e5e48e1b4fd4b2	原文件未入库；.csv.gz 已入库（4.6MB）
+results/B1/test/per_sample.csv	14655837	14.0	50706	f01dde99e2a207d4bc1de1009914d5a20844f1607dfffdb69fce227b2695fb1b	未入库（gzip -9 后仍 >5MB）
+results/B1/val/features_per_image.csv	5766565	5.5	19910	f9d65720871ca1a9efdf8e275ba98a38724701a30bb56011b992ba2c86670a15	原文件未入库；.csv.gz 已入库（2.0MB）
+results/B1/val/per_sample.csv	6388945	6.1	22127	854be7f80273e9d9821b116d29258a54f6eb12ae5d867e23e0650f8f0b59cd26	原文件未入库；.csv.gz 已入库（2.5MB）
+results/B1/val_v5/features_per_image.csv	5766565	5.5	19910	f9d65720871ca1a9efdf8e275ba98a38724701a30bb56011b992ba2c86670a15	原文件未入库；.csv.gz 已入库（2.0MB）
+results/B1/val_v5/per_sample.csv	6388945	6.1	22127	854be7f80273e9d9821b116d29258a54f6eb12ae5d867e23e0650f8f0b59cd26	原文件未入库；.csv.gz 已入库（2.5MB）
+results/B1_V1/test/pairs_caption_sib.csv	8512493	8.1	19437	80730fee5894b34e94e3cdde2dd7501a5cd4b810a4c684fc840691dc38ea48d7	原文件未入库；.csv.gz 已入库（2.7MB）
+results/B1_V2/test/pairs.csv	5965910	5.7	19437	ba2b6da7e7267d4d32efe21561b4cd60d0a3d95405f99ce08a47e26d451e018c	原文件未入库；.csv.gz 已入库（2.0MB）

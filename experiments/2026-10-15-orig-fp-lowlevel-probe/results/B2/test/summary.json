@@ -1,0 +1,49 @@
+{
+ "split": "test",
+ "frozen_sha256": "2bb5e678a97089f80d2059c748b378321e9ccd2bb0196da30e316add85658579",
+ "alignment_check": {
+  "n_all": 50705,
+  "n_word_count_mismatch": 0,
+  "n_text_tampered": 14393,
+  "n_gt_vs_toklabel_mismatch": 0,
+  "n_empty_gt": 0
+ },
+ "miss": {
+  "n_text_tampered": 14393,
+  "n_miss": 3614,
+  "miss_rate": 0.25109428194261096,
+  "by_cls": {
+   "face_attribute&text_attribute": {
+    "n": 886,
+    "miss_rate": 0.19187358916478556
+   },
+   "face_attribute&text_swap": {
+    "n": 2529,
+    "miss_rate": 0.27560300514037167
+   },
+   "face_swap&text_attribute": {
+    "n": 1118,
+    "miss_rate": 0.20930232558139536
+   },
+   "face_swap&text_swap": {
+    "n": 2935,
+    "miss_rate": 0.27597955706984667
+   },
+   "text_attribute": {
+    "n": 1973,
+    "miss_rate": 0.20070957932083122
+   },
+   "text_swap": {
+    "n": 4952,
+    "miss_rate": 0.26393376413570274
+   }
+  }
+ },
+ "bootstrap": {
+  "B": 1000,
+  "seed": 2026,
+  "cluster": "metadata 的 id",
+  "ci": "percentile 95%"
+ },
+ "diag_ref": "8ebbb87"
+}

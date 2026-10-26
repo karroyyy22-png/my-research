@@ -28,7 +28,7 @@
 ## 结果
 （B 阶段进行中：val 部分已运行，test 未运行；完整结果卡待 test 重复后补写。冻结文件 `frozen_hypotheses.json` v7，sha256 `490a02f4…`）
 
-B0 test（只读 metadata 与 pkl，描述性）在冻结文件 v1 下于 10-25 23:25 运行；B1（含 H2）、V0、V1、V2 的 test 尚未运行；冻结文件后续各版的修改均不由 B0 test 结果引起。
+B0（描述性，只读 metadata 与 pkl）在冻结文件 v1 下于 10-25 23:25 运行；B1（含 H2）、V0、V1、V2 的 test 在冻结文件 v7 下于 10-26 运行完成，其中 H2 三项与 V0 A 组为确认性检验，其余为重复，仅描述；冻结文件后续各版的修改均不由 B0 test 结果引起。
 
 `scripts/b1_verdict.py`（H1 判定）：该脚本在看过 test 之后编写，仅机械实现事先冻结的判据。
 

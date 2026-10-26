@@ -1,0 +1,34 @@
+# 汇总文档：无训练/推理参数；只记录来源
+experiment: 2026-10-26-asap-dgm4-weakness-summary
+type: summary (read-only, no new computation)
+checkpoint: /nas/data_2/wanhongz/ASAP/results/log20260602_134300_train_4gpu_batch16/checkpoint_best.pth
+preds: /nas/data_2/wanhongz/failure_analysis/preds_{val,test}_all.pkl   # post-UtilsC
+sources:
+  A:
+    branch: exp/6class-decoder-diag
+    commit: 8ebbb87
+    dir: experiments/2026-10-25-asap-dgm4-6class-decoder-diag/results/
+    files:
+      - E01/E01_test_binary_refs.csv
+      - E01/E01_test_decoders_main.csv
+      - E02/E02_axis_error_composition.csv
+      - E02/E02_axis_independence.csv
+      - E02/E02_test_A_tuned_axes_questions.json
+      - E02/E02_test_B_tuned_axes_questions.json
+      - E02/E02_test_A_tuned_error_layers.csv
+      - E03/E03_test_conflict_rates.csv
+  B:
+    branch: exp/orig-fp-lowlevel-probe
+    commit_at_summary: 937247c
+    dir: experiments/2026-10-15-orig-fp-lowlevel-probe/results/
+    files:
+      - B0/test/summary.csv
+      - B1_V0/test/V0_tests.csv
+      - B1_verdict/val_v5+test/h1_verdict.csv
+      - B1/test/h2_face_bg_ratio.csv
+      - B2/test/summary.json
+      - B2/test/h_t1_auc.csv
+      - B2/test/h_t1_tpr_at_fpr.csv
+      - B2/test/h_t2_features.csv
+      - B2/test/h_t3_hit.csv
+verify: scripts/verify_weakness_summary.py -> results/verify_weakness_summary.txt

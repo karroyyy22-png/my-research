@@ -1,0 +1,264 @@
+{
+  "version": 7,
+  "frozen_at": "2026-10-25",
+  "changelog": {
+    "v6_sha256": "1c0d7c72f7a826fd21b5f32eb836aa5cc2acac8db2816eeec97d216d551a6787",
+    "v7": "2026-10-26，V2 运行前：(1) V2(a)(b) 增加去掉截断值配对的敏感性分析（补充）；(2) V2(c) 按原图 FP 分组 A/B/C/D 分层。其余同 v6。",
+    "v5_sha256": "4ecf0cc6db2975bd0091a2252c21245ab5818613f3eccd640121564393b36a3a",
+    "v6": "2026-10-26，任何 test 运行之前：(1) 新增 V2（同 id 兄弟的 FS/FA logit 关系，只读 pkl 与 metadata，纯描述）；(2) H2-2、H2-3 增加控制最大脸尺寸与 W×H 的调整版，标注为补充、不参与确认判定。其余判据不变。",
+    "v4_sha256": "4086f9113ddbaced3692ec0e0b8e22ea50d23eb69bff2a29d0fb661934eb96c9",
+    "v5": "B1 val 全量之后、任何 test 运行之前：新增探索性假设 H2（face_bg_ratio 方向，val 上提出、test 上确认）。H1 及其余判据、特征、匹配规则不变。",
+    "v3_sha256": "78ed174946b62514ba3d88a7af99b667b5dbf4b763fb61c865ef90f9fb83ab56",
+    "v4": "仍在任何全量运行之前：(1) V0 的同句兄弟（B 组）检验降级为描述；同图兄弟（A 组）保留为确认性检验；(2) V0 与 V1 的 cluster bootstrap 改为以 id 为簇；(3) 新增 V1（同 id 兄弟的头分数差，只读 pkl 与 metadata，纯描述）。",
+    "v1": "95a10e42e1d72dfc19658a245ad7d48d20863916c5a6421cbf7b3991f23b6d30",
+    "v2_sha256": "e460355fda72f5b6b940a3a3f7db074322a581d43a731ddc24100027dbfad177",
+    "v3": "仍在任何全量运行之前：(1) 匹配率 <70% 的来源增加 (来源, W, H) 匹配的次要分析；(2) 判据补事先预测方向、“与 H1 方向相反”类别、无方向特征只做双侧检验；(3) jpeg_q 常数时结果中必须写明 H1 的“压缩”一项不可检验。",
+    "v2": "在 val --n 500 小样本之后、任何全量运行之前修改：(1) 最大脸 8–16 像素档单独报告，脸部特征的主分析只用最大脸 >=16 的样本；(2) 常数特征规则（小样本中 jpeg_q 在全部 1473 张图上都是同一张量化表，Q≈95）；(3) 匹配成功率按全量协变量（不读图）判断；(4) face_bg_ratio 与 lap_var/face_lap_var 定义上近似线性相关的说明。判据与特征清单未改。"
+  },
+  "scope": "B0（训练集重复/泄漏检查）与 B1（图像轴：Original 误报与低层特征）。B2/B3 另行冻结。",
+  "seed": 2026,
+  "bootstrap": {"B": 1000, "ci": 0.95, "percentile": true},
+  "splits": {
+    "primary": "val",
+    "replication": "test",
+    "note": "H1 与 P5/P9/P22/P29 都是看 test 上 32 对案例审查后提出的，test 对它们不是独立确认集：主检验在 val，test 只作重复。看过 test 之后不得增删特征或判据。"
+  },
+  "inputs": {
+    "pred_val": "/nas/data_2/wanhongz/failure_analysis/preds_val_all.pkl",
+    "pred_test": "/nas/data_2/wanhongz/failure_analysis/preds_test_all.pkl",
+    "pred_forbidden": "preds_test_all_preUtilsC.pkl",
+    "meta_dir": "/nas/data_2/wanhongz/datasets/DGM4/metadata",
+    "img_root": "/nas/data_2/wanhongz/datasets"
+  },
+  "run": {
+    "cpu_only": true,
+    "max_workers": 4,
+    "default_split": "val",
+    "smoke": "--n 500：从该 split 的 Original 中按 seed 随机抽 500 条（其余组按同比例抽样），输出到 results/smoke/，只检查流程，不用于任何判断",
+    "outputs": "实验目录下 results/<B0|B1>/<split>/",
+    "hash_check": "所有脚本在 --split test 运行前计算本文件 sha256，与 results/frozen_hypotheses.sha256 比对，不一致则退出"
+  },
+
+  "source_field": {
+    "rule": "只对路径含 /origin/ 的样本（orig/TS/TA）取来源 = image.split('/')[2]；FS/FA/Mixed（/manipulation/）记 unknown。",
+    "inference": "B1(e)：在该 split 的 orig/TS/TA 唯一图像上统计 (W,H)→来源。逐个 (W,H) 判断：该键下 n>=20 且众数来源占比 >=0.95 才视为纯，可为 FS/FA/Mixed 推断来源；其余键不推断（记 unknown）。推断结果单列为 source_inferred，另有 source_is_inferred 标记，并报告覆盖率（FS/FA/Mixed 中被推断的比例）。若纯键覆盖 orig/TS/TA 图像不足 50%，判定整体不纯，不做任何推断。",
+    "note": "n>=20 与 50% 覆盖下限是本文件新增的操作化细节。"
+  },
+
+  "B0": {
+    "targets": "val 与 test 中每条 Original（fake_cls=orig）",
+    "checks": {
+      "same_id": "train 中是否存在 id 相同的样本（任意类别）；存在时记录其 fake_cls（orig/FS/FA/TS/TA/混合）",
+      "same_image": "train 中是否存在 image 路径完全相同的样本",
+      "path_inferred": "manipulation 文件名 <id>-...-<method>.jpg 的第一段等于 id 字段（已核对：三个 split 全部一致），因此并入 same_id；swap 文件名的第二段只有约 5% 能对上任何 id，不视为来源 id，不使用",
+      "same_folder_proxy": "train 中是否有同一 origin 目录（如 DGM4/origin/bbc/0361）的样本，及这些样本的类别分布。目录只是分块目录，不代表同一篇报道，仅作描述",
+      "same_caption_proxy": "train 中是否存在 caption 完全相同（strip 后字符串相等）的样本，及其类别"
+    },
+    "report": "各项命中比例，按来源分层；FP（prob_fake>=0.5）与 TN 的命中比例及差值（bootstrap 95% CI）。只做描述，不下结论。",
+    "not_done": "图像级近重复（需要读图和感知哈希）不在 B0 范围内"
+  },
+
+  "B1": {
+    "sample": "该 split 中 fake_cls=orig 的全部样本；FP = prob_fake>=0.5（R0），TN = 其余",
+    "matching": {
+      "key": "(source, max_face_bucket, W, H) 精确匹配",
+      "max_face_bucket": "最大 mtcnn 框 sqrt(w*h)，分桶 [0,32) [32,64) [64,128) [128,256) [256,inf)；无框记 none",
+      "replacement": "每个 TN 最多用一次（不放回）",
+      "order": "FP 按 seed 随机排序依次匹配；候选 TN 中按 seed 均匀随机选一个未用过的",
+      "unmatched": "匹配不到的 FP 丢弃，按来源统计数量与比例",
+      "success_rate_rule_v2": "匹配成功率 >=70% 则规则不变；<70% 才增加明确标注的“放宽匹配”次要分析。成功率按该 split 全部 Original 的协变量（来源、脸桶、W、H，不读图、不看任何特征值）计算，因为 --n 500 只有约 375 个 TN 可配，成功率被样本量压低（val 小样本 65.3%，全量协变量 82.6%）。val 全量协变量成功率 82.6% >= 70%：规则不变，不做放宽匹配分析。test 同样在读图前计算并报告。",
+      "secondary_by_source_v3": "次要分析（明确标注，不用于判定）：在 val 与 test 上各自先用全量协变量计算各来源的主规则匹配率，匹配率 <70% 的来源（val 目前为 usa_today 57.9%、washington_post 69.4%）只在该来源内部、仅按 (来源, W, H) 精确匹配（不含脸尺寸桶），其余规则同主分析（TN 不放回、FP 随机顺序、候选均匀随机、seed 相同）；报告这些来源合并及分来源的匹配率与 (a) 统计。主分析规则不变"
+    },
+    "features": {
+      "imaging_quality": ["lap_var", "noise_sigma", "noise_sigma_flat"],
+      "encoding_trace": ["jpeg_q", "bytes_per_px"],
+      "color_tone": ["mean_saturation", "near_gray", "bright_mean", "bright_std"],
+      "face": ["face_lap_var", "face_noise_sigma", "face_bg_ratio"],
+      "geometry_confounders": ["W", "H", "max_face", "n_faces"]
+    },
+    "feature_definitions": {
+      "gray": "PIL Image.convert('L') 转 float64",
+      "lap_var": "复用 probe_lowlevel.lap_var（4 邻域 Laplacian 响应的方差），全图",
+      "noise_sigma": "复用 probe_lowlevel.immerkaer_sigma，全图",
+      "noise_sigma_flat": "平坦区噪声：在内部像素上算 Immerkaer 3x3 响应 c 与 Sobel 梯度幅值 g；取 g <= 该图 g 的第 20 百分位的像素；sigma = sqrt(pi/2) * mean(|c|) / 6",
+      "jpeg_q": "复用 probe_lowlevel.jpeg_quality（亮度量化表相对 IJG 标准表的缩放反推）",
+      "bytes_per_px": "文件字节数 / (W*H)",
+      "mean_saturation": "PIL convert('HSV') 的 S 通道均值 / 255",
+      "near_gray": "图像 mode 属于 {L, LA, 1} 或 mean_saturation < 0.05，取 0/1",
+      "bright_mean": "gray 均值",
+      "bright_std": "gray 标准差",
+      "face_box": "面积最大的 mtcnn 框，裁到图像边界内；裁剪后宽或高 < 8 像素记缺失",
+      "face_lap_var": "lap_var(最大脸裁剪)",
+      "face_noise_sigma": "immerkaer_sigma(最大脸裁剪)",
+      "face_bg_ratio": "log( face_lap_var / 全图 Laplacian 响应在所有 mtcnn 框之外像素上的方差 )",
+      "W_H": "取自 pkl",
+      "max_face": "最大 mtcnn 框 sqrt(w*h)；无框为 0",
+      "n_faces": "mtcnn 框个数"
+    },
+    "encoding_validity": {
+      "jpeg_q_invalid_if": ["非 JPEG（无量化表）", "估计 Q >= 98（Q≈100，表接近全 1，反推不稳定）", "非 IJG 表：把 IJG 标准亮度表按估计 Q 缩放后，与实际表各自排序比较，平均绝对偏差 / 预测表均值 > 0.15"],
+      "bytes_per_px_invalid_if": ["EXIF + ICC 等元数据字节数 > 文件大小的 10%"],
+      "handling": "无效值置缺失、不填补；按 split × FP/TN（以及 B1(c) 各组）报告无效比例"
+    },
+    "notes_frozen": [
+      "全图 noise_sigma 与 lap_var 都受图像内容高频纹理影响，预计高度相关，不能当作两条独立证据；noise_sigma_flat 用来部分去除纹理影响",
+      "jpeg_q 与 bytes_per_px 归为“编码痕迹”，与“成像质量”分开报告；B1(c) 中若 FS/FA 与 orig 在这两项上差异大，只标注为“生成/重编码过程的痕迹”，不写成“模型学到的捷径”",
+      "报告所有质量特征之间的 Spearman 相关矩阵（按 split、全体 orig）",
+      "v2：face_bg_ratio = log(face_lap_var) - log(背景 Laplacian 方差)，而背景方差与全图 lap_var 接近，所以三者在定义上近似线性相关，联合模型 VIF 会很大；联合模型只作描述，判定只用单特征模型"
+    ],
+    "face_size_tier_v2": {
+      "report": "按 split × FP/TN 单独报告最大脸边长 sqrt(w*h) 在 [8,16) 像素的样本数与占比；该档脸部清晰度与噪声不可靠，不与其他档混在一起解读",
+      "primary_for_face_features": "face_lap_var、face_noise_sigma、face_bg_ratio 的 (a) 只用 FP 与 TN 两侧最大脸都 >=16 的配对，(b) 只用最大脸 >=16 的 orig；全部样本的结果作为参考另列，不用于判定"
+    },
+    "constant_features_v2": {
+      "rule": "若某质量特征在该 split 的 Original 上只有一个取值（或有效取值不足 2 个），标为“常数，不可检验”，不进入 (a)(b) 检验、不计入 Holm 家族；结果中报告实际检验的特征数与被排除的特征",
+      "observed_in_smoke": "val --n 500：jpeg_q 在 orig/TS/TA/FS/FA 共 1473 张图上都等于 94.997（同一张量化表），预计全量也是常数；若全量不是常数则按原定义检验"
+    },
+    "analyses": {
+      "a": "配对样本上，每个特征：标准化均值差 SMD = (mean_FP - mean_TN) / sqrt((var_FP + var_TN)/2)；AUC（FP 为正类，复用 probe_lowlevel.auc）；以配对为单位 bootstrap 95% CI；p 值用 Mann-Whitney U 双侧",
+      "b": "全体 orig（每个模型对该特征做完全样本分析，报告 n）上的逻辑回归：FP ~ 质量特征 + 来源(one-hot, 参照 guardian) + log(W*H) + log1p(max_face) + has_face + n_faces。每次只放一个质量特征；另有一个放入全部质量特征的联合模型，报告各特征 VIF。连续质量特征中 lap_var、face_lap_var、noise_sigma、noise_sigma_flat、face_noise_sigma、bytes_per_px 先取 log1p，所有连续质量特征在该 split 的 orig 上 z 标准化。无惩罚最大似然（IRLS），Wald 95% CI 与 p 值",
+      "c": "数据集偏置：图像未改组 = 该 split 的 orig/TS/TA 按 image 路径去重后的唯一图像；对比 FS、FA（各自全部样本）。每个特征报告 AUC（篡改组为正类）与 SMD；编码痕迹特征按 notes_frozen 标注",
+      "d": "对照：FS/FA 样本中被漏检（prob_fake<0.5）vs 被检出，同一批特征的 AUC 与 SMD，FS 与 FA 分开",
+      "e": "(W,H)→来源纯度，规则见 source_field.inference",
+      "f": "verify_pairs 的自然配对 V0 与孪生组分析，见 V0 与 twins；val 与 test 各跑一遍"
+    },
+    "multiple_testing": {
+      "family": ["lap_var", "noise_sigma", "noise_sigma_flat", "jpeg_q", "bytes_per_px", "mean_saturation", "near_gray", "bright_mean", "bright_std", "face_lap_var", "face_noise_sigma", "face_bg_ratio"],
+      "n_features_tested": "12（v2：减去常数、不可检验的特征后的实际数量写入结果）",
+      "method": "每个 split 内，(a) 的 AUC p 值与 (b) 单特征模型的系数 p 值各自做 Holm 校正；结果同时给出未校正与 Holm 校正两种判定",
+      "not_in_family": "W、H、max_face、n_faces 是匹配/混杂变量，只作描述"
+    },
+    "predictions": {
+      "statement": "（v1 原文，保留）事先预测（待验证，方向以双侧检验为准）：若 H1 成立，FP 相对配对 TN 的 noise_sigma_flat、noise_sigma 更高，jpeg_q、bytes_per_px 更低，lap_var 方向不预设（噪声会抬高、模糊会降低）",
+      "direction_used_in_criteria": "（v1 原文，v3 起由 predictions_v3 取代）双侧：AUC >= 0.60 或 AUC <= 0.40 都算效应"
+    },
+    "predictions_v3": {
+      "directed": {
+        "noise_sigma": "FP 更高", "noise_sigma_flat": "FP 更高", "face_noise_sigma": "FP 更高",
+        "lap_var": "FP 更低", "face_lap_var": "FP 更低",
+        "mean_saturation": "FP 更低", "near_gray": "FP 更多（=1 的比例更高）"
+      },
+      "undirected": ["bright_mean", "bright_std", "bytes_per_px", "face_bg_ratio", "W", "H", "max_face", "n_faces"],
+      "undirected_rule": "无预测方向的特征只做双侧检验并完整报告，不判“支持 H1”",
+      "jpeg_q": "v1 预测 FP 的 jpeg_q 更低；若 jpeg_q 在该 split 为常数，结果中必须写明：jpeg_q 在数据中是常数（同一张量化表），H1 的“压缩”一项不可检验。该项保留在假设中并标注“不可检验”，不得删除",
+      "auc_convention": "AUC 以 FP 为正类、特征值为得分：预测“FP 更高/更多”时 AUC>0.5 为预测方向，预测“FP 更低”时 AUC<0.5 为预测方向"
+    },
+    "criteria": {
+      "support": "val 配对 AUC >= 0.60（或 <= 0.40）且 95% CI 不含 0.5；test 的 AUC 与 val 同向；val 单特征回归系数 95% CI 不含 0，且与 AUC 同向",
+      "insufficient": "方向在 val 与 test 一致但 CI 含 0.5；或只在一个 split 成立；或不满足 support 也不满足 not_supported 的其他情形",
+      "not_supported": "val 配对 AUC 的 95% CI 全在 [0.45, 0.55] 内",
+      "holm_version": "把“CI 不含 0.5 / 不含 0”替换为对应 Holm 校正 p < 0.05，得到校正后判定，与未校正判定并列"
+    },
+    "criteria_v3": {
+      "applies_to": "predictions_v3.directed 中的 7 个特征；v3 起取代上面 criteria 对这些特征的 support/insufficient 定义（not_supported 与 holm_version 沿用）",
+      "support_H1": "以下全部满足：val 配对 AUC 在预测方向上偏离 0.5 至少 0.10（即 AUC>=0.60 或 <=0.40，且方向与预测一致）；val AUC 的 95% CI 不含 0.5；test 配对 AUC 与 val 同向（预测方向）；val 单特征回归系数 95% CI 不含 0 且符号与预测方向一致",
+      "opposite_to_H1": "val 配对 AUC 在预测的反方向上偏离 0.5 至少 0.10：标为“与 H1 方向相反”，同时完整报告 CI、test 方向与回归系数",
+      "not_supported": "val 配对 AUC 的 95% CI 全在 [0.45, 0.55] 内",
+      "insufficient": "其余情形",
+      "undirected_features": "bytes_per_px、bright_mean、bright_std、face_bg_ratio：报告双侧 AUC、CI、回归系数与两种 p 值，只标“双侧有差异（CI 不含 0.5 且偏离 >=0.10）/ 无可分辨差异”，不判“支持 H1”",
+      "holm_family": "Holm 家族仍为全部可检验的质量特征（常数特征除外），有方向与无方向特征一起校正"
+    },
+    "missingness": {
+      "report": "按 split × FP/TN 统计：读图失败数、无 mtcnn 框数、脸裁剪过小数、jpeg_q 无效数、bytes_per_px 无效数",
+      "flag_rule": "FP 与 TN 缺失率之差 >= 2 个百分点且 bootstrap 95% CI 不含 0，视为“明显差异”，单独报告，不得丢弃后忽略"
+    }
+  },
+
+  "V0": {
+    "script": "scripts/b1_verify_pairs_wrap.py（不修改 verify_pairs.py；复用其 FP 分组定义）",
+    "fp_groups": "orig 且 prob_fake>=0.5：A = 图像维(FS 或 FA)>=0.5 且文本维都 <0.5；B = 文本维(TS 或 TA)>=0.5 且图像维都 <0.5；C = 两侧都有；D = 四维都 <0.5。对照组 = TN",
+    "siblings": "只在同一 split 内找。同图兄弟：fake_cls ∈ {orig, text_swap, text_attribute} 且 image 路径相同（排除自身）。同句兄弟：fake_cls ∈ {orig, face_swap, face_attribute} 且完整 caption（strip 后、不截断）字符串完全相同（排除自身）",
+    "caption_match_rule": "完全相同（不用 Jaccard）",
+    "manual_check": "按 seed 抽 20 对同句兄弟，打印两侧 caption 与 image 供人工核对是否误合并",
+    "statistics": {
+      "A": "A 组中有同图兄弟的 orig：兄弟样本图像维报警率（每条 orig 先对其兄弟取平均）的均值，减去 TN 组的同一指标",
+      "B": "B 组中有同句兄弟的 orig：兄弟样本文本维报警率均值，减去 TN 组的同一指标",
+      "C_D": "C、D 组只作描述",
+      "cluster_bootstrap": "以兄弟簇为单位重采样：同图用 image 路径为簇，同句用 caption 为簇"
+    },
+    "criteria": {
+      "support": "差值 >= 5 个百分点，且 cluster bootstrap 95% CI 不含 0",
+      "insufficient": "差值 < 5 个百分点但方向一致（为正）；或差值 >= 5 点但 CI 含 0",
+      "not_supported": "95% CI 全在 [-2, +2] 个百分点内"
+    },
+    "coverage": "报告各组有兄弟样本的比例；val 的覆盖率单列",
+    "v4_changes": {
+      "caption_sibling_downgrade": "val --n 500 抽查的 20 对同句兄弟全部是同 id 的 FS/FA，即同一张原图只改了人脸区域，背景相同。因此 B 组（同句兄弟文本维报警）只作描述：文本维报警不能归因于 caption，不套用 criteria、不作确认性结论，结果中写明这条限度。A 组（同图兄弟 = 同一原图的 TS/TA）保留为确认性检验，沿用 criteria",
+      "caption_match_rule": "不变：完整 caption 完全相同；不加长度下限；不加“排除同 id”的次要分析（抽查 20 对全部同 id，排除后集合为空）",
+      "cluster_bootstrap": "以 metadata 的 id 为簇（取代 v1 的 image 路径 / caption 为簇）"
+    }
+  },
+
+  "H2": {
+    "status": "探索性假设，val 上提出（看过 B1 val 全量结果之后）；test 上确认；本段冻结后才能运行 test",
+    "feature": "face_bg_ratio（定义见 B1.feature_definitions；只用最大脸 >=16 的样本，同 face_size_tier_v2）",
+    "statement": "face_bg_ratio 的方向：(1) Original 的 FP 比配对 TN 更低；(2) FS/FA（合并）比未改图更低；(3) 被漏检的 FA 比被检出的 FA 更高",
+    "val_values_that_motivated_it": "val：(1) 配对 AUC 0.470 [0.451, 0.489]；(2) FS 0.407、FA 0.418（vs 未改图，未做 CI）；(3) FA 漏检 vs 检出 0.586（未做 CI）",
+    "comparisons": {
+      "H2-1": "Original FP vs 配对 TN：用 B1 主分析的精确匹配对（来源、脸桶、W、H；两侧最大脸 >=16）；AUC 以 FP 为正类，预测 AUC<0.5；bootstrap 按配对重采样（每对两条样本 id 不同、id 不重复，等同 id 簇）",
+      "H2-2": "FS+FA 合并 vs 未改图（该 split 中 orig/TS/TA 按 image 去重的全部唯一图像）：AUC 以篡改组为正类，预测 AUC<0.5；以 id 为簇 bootstrap（同 id 的原图与篡改图落在同一簇）",
+      "H2-3": "被漏检的 FA（prob_fake<0.5）vs 被检出的 FA：AUC 以漏检为正类，预测 AUC>0.5；以 id 为簇 bootstrap",
+      "descriptive": "FS、FA 分别 vs 未改图，仅描述"
+    },
+    "confirmation": "test 上三个比较的 AUC 方向都与预测一致，且各自 bootstrap 95% CI 不含 0.5 → 确认；否则 → 未确认（逐项报告）。不设效应量门槛（预期很小）",
+    "mandatory_statement": "结果必须写明：即使确认，效应小，不能解释大部分误报",
+    "bootstrap": "B 与 seed 同全局设置",
+    "adjusted_supplement_v6": {
+      "label": "补充，不参与确认判定",
+      "applies_to": ["H2-2", "H2-3"],
+      "model": "逻辑回归：组别（H2-2 篡改=1 / 未改=0；H2-3 漏检=1 / 检出=0）~ z(face_bg_ratio) + log1p(max_face) + log(W*H)；无惩罚 IRLS；face_bg_ratio 的系数与以 id 为簇的 bootstrap 95% CI；系数 <0 对应 AUC<0.5 的方向",
+      "splits": "val（探索集上的描述）与 test 都输出",
+      "reporting": "若未调整 AUC 的方向与调整后系数的方向不一致，在结论里如实写出"
+    }
+  },
+
+  "V1": {
+    "script": "scripts/b1_v1_siblings.py（只读 pkl 与 metadata，不读图）",
+    "role": "纯描述，不设支持/不支持门槛；结果中写明：不能据此断言模型内部是否使用跨模态特征",
+    "splits": "val 先做，test 重复",
+    "pairs": {
+      "caption_sibling": "orig 与同一 split 中 id 相同、fake_cls ∈ {face_swap, face_attribute} 的样本（同一原图只改人脸区域、caption 不变）；一个 orig 有多个兄弟时每个组合各算一对",
+      "image_sibling": "orig 与同一 split 中 id 相同、fake_cls ∈ {text_swap, text_attribute} 的样本（同一原图、caption 被改）；同时报告其中 image 路径与 orig 不同的对数"
+    },
+    "analyses": {
+      "a": "同句兄弟：Δ_TS = p_TS(兄弟) − p_TS(orig)，Δ_TA 同理；报告 |Δ| 的中位数、四分位数（Q1、Q3）及中位数的 bootstrap 95% CI，同时报告带符号 Δ 的中位数；按兄弟类别（FS/FA）与生成方法（simswap/infoswap/StyleCLIP/HFGI，取自文件名）分层",
+      "b": "同图兄弟：Δ_FS、Δ_FA（兄弟 − orig），统计同 (a)；按兄弟类别（TS/TA）分层",
+      "c": "同句兄弟中的配对排序：兄弟为 FS 时比较 FS 维、为 FA 时比较 FA 维，统计“兄弟该维分数 > 其原图该维分数”的比例与 bootstrap 95% CI；全部配对一份，原图为 FP（prob_fake>=0.5）的子集一份；按方法分层",
+      "d": "覆盖率：每个 split 中有 >=1 个同句兄弟、>=1 个同图兄弟的 orig 比例（全部 / FP / TN）；val 覆盖率低于 test 时如实写明",
+      "e": "不设门槛，只描述"
+    },
+    "bootstrap": "以 id 为簇的 cluster bootstrap，B 与 seed 同全局设置"
+  },
+
+  "V2": {
+    "script": "scripts/b1_v2_logits.py（只读 pkl 与 metadata，不读图）",
+    "role": "纯描述，不设门槛；结果中写明：不能据此断言模型内部机制",
+    "splits": "val 先做，test 重复",
+    "pairs": "同 V1.pairs.caption_sibling：orig 与同 split 中 id 相同的 FS/FA；FS 兄弟比 FS 维，FA 兄弟比 FA 维（own dim）",
+    "logit": "logit(p) = log(p / (1 - p))，p 先 clip 到 [1e-6, 1 - 1e-6]（同阶段A）",
+    "analyses": {
+      "a": "原图 own-dim logit 与兄弟 own-dim logit 的 Spearman 相关与 Pearson R²，以 id 为簇 bootstrap 95% CI；全部配对一份，按兄弟类别（FS/FA）分层",
+      "b": "Δlogit = 兄弟 logit − 原图 logit 的中位数、Q1、Q3 与中位数的 bootstrap 95% CI；全部配对一份，按生成方法（simswap/infoswap/StyleCLIP/HFGI）分层",
+      "c": "原图为 FP（prob_fake>=0.5）的子集：兄弟 own-dim 分数 >=0.5 与 <0.5 的比例（bootstrap CI）；另报兄弟 prob_fake >=0.5 的比例作参考；以及该子集上 Δlogit 的中位数、Q1、Q3 与 CI；按生成方法分层",
+      "d": "不设门槛，只描述"
+    },
+    "bootstrap": "以 id 为簇的 cluster bootstrap，B 与 seed 同全局设置",
+    "v7_additions": {
+      "sensitivity_ab": "补充（描述性）：(a)(b) 另算一遍，去掉原图或兄弟任一方 own-dim logit 落在截断值上的配对（|logit| >= log((1-1e-6)/1e-6) ≈ 13.8155，即 p 被 clip 到 1e-6 或 1-1e-6）；报告剩余对数与被去掉的比例（全部及各分层）",
+      "c_by_fp_group": "(c) 另按原图的 FP 分组分层：A = 图像维（FS 或 FA）>=0.5 且文本维（TS、TA）都 <0.5；B = 文本维 >=0.5 且图像维都 <0.5；C = 两侧都 >=0.5；D = 四维都 <0.5；阈值 0.5。口径出处：2026-10-07-asap-failure-analysis/scripts/diagnose_extra.py（只有图像维/只有文本维/两侧都有/四维都<0.5），字母沿用本实验 verify_pairs.py；结果中写明出处"
+    }
+  },
+
+  "twins": {
+    "definition": "同一 origin 目录内的 orig，FP 与 TN 配对：完整 caption 的词集合 Jaccard（小写、按空白切分）>= 0.8，且 (W,H) 完全相同、max_face_bucket 相同",
+    "replacement": "每个 TN 最多用一次",
+    "order": "FP 按 seed 随机排序；在未用过的合格 TN 中取 Jaccard 最高者，平局按 seed 随机",
+    "statistics": "每个特征：配对差 (FP - TN) 的均值、FP 更高的比例；以 origin 目录为簇做 cluster bootstrap 95% CI。不使用符号检验",
+    "role": "补充证据，与 B1(a)(b) 并列报告，不单独决定 H1 判定"
+  },
+
+  "posthoc_examples": {
+    "items": ["P5", "P9", "P22", "P29"],
+    "role": "来自 test 案例审查，对 test 是事后假设，只作定性示例，不作确认证据；在 val 上不运行（val 上只跑 V0 与孪生组）"
+  }
+}

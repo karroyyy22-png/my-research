@@ -1,0 +1,12 @@
+[frozen] sha256=4ecf0cc6db2975bd0091a2252c21245ab5818613f3eccd640121564393b36a3a
+        n  has_img_sib  img_sib_img_alarm  has_txt_sib  txt_sib_txt_alarm
+grp                                                                      
+A    1214       0.2315             0.8185       0.8789             0.0244
+B     404       0.4233             0.0556       0.8342             0.8561
+C     145       0.3448             0.6900       0.8621             0.8320
+D     126       0.3651             0.3804       0.8254             0.0817
+TN   5584       0.2769             0.0657       0.8483             0.0262
+split                       test  n_fp_with_sib  n_tn_with_sib  rate_fp  rate_tn   diff  ci_lo  ci_hi                                      verdict                                                    frozen_sha256
+  val A vs TN: img_sib_img_alarm            281           1546   0.8185   0.0657 0.7529 0.7027 0.7988                                           支持 4ecf0cc6db2975bd0091a2252c21245ab5818613f3eccd640121564393b36a3a
+  val B vs TN: txt_sib_txt_alarm            337           4737   0.8561   0.0262 0.8299 0.7922 0.8664 仅描述（同句兄弟与原图只在人脸区域不同，背景相同，文本维报警不能归因于 caption） 4ecf0cc6db2975bd0091a2252c21245ab5818613f3eccd640121564393b36a3a
+[done] /nas/data_2/wanhongz/my-research/experiments/2026-10-15-orig-fp-lowlevel-probe/results/B1_V0/val  frozen_sha256=4ecf0cc6db2975bd0091a2252c21245ab5818613f3eccd640121564393b36a3a

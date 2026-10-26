@@ -1,0 +1,9 @@
+split,check,group,n_train_hits,orig,FS,FA,TS,TA,mixed
+val,same_id,FP,0,,,,,,
+val,same_id,TN,0,,,,,,
+val,same_image,FP,0,,,,,,
+val,same_image,TN,0,,,,,,
+val,same_folder,FP,7215,0.8400554400554401,0.0,0.0,0.10644490644490645,0.0534996534996535,0.0
+val,same_folder,TN,21668,0.8469171127930589,0.0,0.0,0.10282444157282629,0.05025844563411482,0.0
+val,same_caption,FP,0,,,,,,
+val,same_caption,TN,5,0.6,0.2,0.2,0.0,0.0,0.0

@@ -1,0 +1,16 @@
+[frozen] sha256=95a10e42e1d72dfc19658a245ad7d48d20863916c5a6421cbf7b3991f23b6d30
+split stratum        check     n  n_fp  n_tn  hit_rate  hit_rate_fp  hit_rate_tn  diff_fp_minus_tn  diff_ci_lo  diff_ci_hi  frac_manip_among_hits_fp  frac_manip_among_hits_tn  n_hit
+ test     all      same_id 16876  4071 12805    0.0000       0.0000       0.0000            0.0000      0.0000      0.0000                       NaN                       NaN      0
+ test     all   same_image 16876  4071 12805    0.0000       0.0000       0.0000            0.0000      0.0000      0.0000                       NaN                       NaN      0
+ test     all  same_folder 16876  4071 12805    0.9996       0.9998       0.9995            0.0002     -0.0004      0.0008                    0.1617                    0.1573  16869
+ test     all same_caption 16876  4071 12805    0.0015       0.0007       0.0017           -0.0010     -0.0020      0.0002                    0.5778                    0.3947     25
+split        check group  n_train_hits   orig     FS     FA    TS     TA  mixed
+ test      same_id    FP             0    NaN    NaN    NaN   NaN    NaN    NaN
+ test      same_id    TN             0    NaN    NaN    NaN   NaN    NaN    NaN
+ test   same_image    FP             0    NaN    NaN    NaN   NaN    NaN    NaN
+ test   same_image    TN             0    NaN    NaN    NaN   NaN    NaN    NaN
+ test  same_folder    FP        225920 0.8403 0.0000 0.0000 0.111 0.0487    0.0
+ test  same_folder    TN        784557 0.8425 0.0000 0.0000 0.107 0.0506    0.0
+ test same_caption    FP            11 0.4545 0.3636 0.1818 0.000 0.0000    0.0
+ test same_caption    TN            75 0.5867 0.2267 0.1867 0.000 0.0000    0.0
+[out] /nas/data_2/wanhongz/my-research/experiments/2026-10-15-orig-fp-lowlevel-probe/results/B0/test  frozen_sha256=95a10e42e1d72dfc19658a245ad7d48d20863916c5a6421cbf7b3991f23b6d30

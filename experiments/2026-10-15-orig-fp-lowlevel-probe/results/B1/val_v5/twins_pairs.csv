@@ -1,0 +1,2 @@
+folder,fp_meta,tn_meta,jaccard,d_lap_var,d_noise_sigma,d_noise_sigma_flat,d_jpeg_q,d_bytes_per_px,d_mean_saturation,d_near_gray,d_bright_mean,d_bright_std,d_face_lap_var,d_face_noise_sigma,d_face_bg_ratio
+DGM4/origin/bbc/0169,17269,7000,0.8947368421052632,1605.3219886318645,8.555556696715442,8.938316636503941,0.0,0.32191905909854623,-0.2020323137655968,0,-14.352002520271753,-11.748535311656084,1804.93376472245,8.610910977349722,0.1876376208201485

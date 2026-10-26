@@ -1,0 +1,37 @@
+experiment: 2026-10-25-asap-dgm4-6class-decoder-diag
+stage: A (E01 + E02 + E03)
+compute: CPU only, offline, no images, no model inference
+inputs:
+  preds_val: /nas/data_2/wanhongz/failure_analysis/preds_val_all.pkl     # n=22126, post-UtilsC
+  preds_test: /nas/data_2/wanhongz/failure_analysis/preds_test_all.pkl   # n=50705, post-UtilsC
+  forbidden: /nas/data_2/wanhongz/failure_analysis/preds_test_all_preUtilsC.pkl
+  metadata: /nas/data_2/wanhongz/datasets/DGM4/metadata/{val,test}.json
+  prob_mc_order: [FS, FA, TS, TA]
+split:
+  file: results/split_val.json
+  method: stratified by fake_cls, 50/50
+  seed: 2026
+  n_val_dev: 11060
+  n_val_holdout: 11066
+fit_on: val_dev only
+objective: six-class Macro-F1
+references:
+  R0: {binary_threshold: 0.5}
+  R1: {binary_threshold: 0.736491}
+decoders:          # 最终数值以 results/frozen_config.json 为准
+  A_untuned: {t_b: 0.5, t_m: 0.5}
+  A_tuned: {t_b: 0.86, t_m: 0.71, grid: [0.02, 0.98, 0.01]}
+  A_matchB: {t_b: 0.89, t_m: 0.71, rule: match val_dev Original Recall of B_tuned}
+  B_b0: {b_orig: 0.0}
+  B_tuned: {b_orig: 0.85, grid: [-10, 20, 0.05]}
+  B_matchA: {b_orig: 0.70, rule: match val_dev Original Recall of A_tuned}
+  B_TS_b0: {temps: [3.6603, 3.1393, 4.0021, 3.3326], b_orig: 0.0}
+  B_TS_tuned: {temps: [3.6603, 3.1393, 4.0021, 3.3326], b_orig: 0.15}
+  C_LR: {model: multinomial logistic regression, target: 9-class, features: [logit p_fake, logit p_FS, logit p_FA, logit p_TS, logit p_TA], standardize: val_dev mean/std, penalty: l2, C: 1.0}
+prob_clip: 1.0e-6
+bootstrap: {n: 1000, seed: 2026, paired: true}
+strata:
+  face_size: sqrt(w*h) of largest mtcnn box, bins [<32, 32-64, 64-128, 128-256, >=256]
+  p_fake_bins: [0, .1, .3, .5, .7, .9, 1]
+  small_n_flag: 200
+frozen_config_sha256: 35e700fbc430d4820f6b8fc9abdbd6dbab3ada92c7b3cec6765ed645157ffede

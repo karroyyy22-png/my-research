@@ -1,0 +1,7 @@
+[frozen] sha256=490a02f41bb810c60e899e4b36cd4f2ab92023224f5c09c29ef9e0d8c593cab5
+split subset  n_orig  frac_has_caption_sib  frac_has_image_sib                                                    frozen_sha256
+ test    all   16876                0.8439              0.3039 490a02f41bb810c60e899e4b36cd4f2ab92023224f5c09c29ef9e0d8c593cab5
+ test     FP    4071                0.8538              0.3053 490a02f41bb810c60e899e4b36cd4f2ab92023224f5c09c29ef9e0d8c593cab5
+ test     TN   12805                0.8407              0.3035 490a02f41bb810c60e899e4b36cd4f2ab92023224f5c09c29ef9e0d8c593cab5
+[done] /nas/data_2/wanhongz/my-research/experiments/2026-10-15-orig-fp-lowlevel-probe/results/B1_V1/test  frozen_sha256=490a02f41bb810c60e899e4b36cd4f2ab92023224f5c09c29ef9e0d8c593cab5  (纯描述；不能据此断言模型内部是否使用跨模态特征)
+exit=0

@@ -1,0 +1,31 @@
+[frozen] sha256=490a02f41bb810c60e899e4b36cd4f2ab92023224f5c09c29ef9e0d8c593cab5
+                    analysis    stratum  n_pairs  n_ids  frac_dropped  spearman  spearman_ci_lo  spearman_ci_hi  pearson_r2  r2_ci_lo  r2_ci_hi
+                        main        all    19436  14241        0.0000   -0.0205         -0.0351         -0.0064      0.0035    0.0023    0.0052
+                        main sib_cls=FA     8921   8921        0.0000   -0.0901         -0.1106         -0.0699      0.0003    0.0000    0.0014
+                        main sib_cls=FS    10515  10515        0.0000    0.0573          0.0390          0.0762      0.0119    0.0087    0.0156
+sensitivity_drop_clipped（补充）        all    19416  14232        0.0010   -0.0202         -0.0328         -0.0062      0.0035    0.0022    0.0051
+sensitivity_drop_clipped（补充） sib_cls=FA     8901   8901        0.0022   -0.0898         -0.1107         -0.0687      0.0003    0.0000    0.0014
+sensitivity_drop_clipped（补充） sib_cls=FS    10515  10515        0.0000    0.0573          0.0379          0.0766      0.0119    0.0087    0.0157
+                    analysis          stratum  frac_dropped  n_pairs  n_ids  median      q1      q3  median_ci_lo  median_ci_hi
+                        main              all        0.0000    19436  14241 16.7648  8.5516 20.6779       16.6026       16.9456
+                        main      method=HFGI        0.0000     4570   4570 15.5832  6.4470 20.3674       15.1401       15.8420
+                        main method=StyleCLIP        0.0000     4351   4351 19.7778 13.7041 21.8035       19.5923       19.9681
+                        main  method=infoswap        0.0000     7024   7024 16.3653  8.6718 20.3392       16.1088       16.6090
+                        main   method=simswap        0.0000     3491   3491 14.4873  6.3344 19.3944       13.9629       14.8795
+sensitivity_drop_clipped（补充）              all        0.0010    19416  14232 16.7617  8.5471 20.6757       16.5942       16.9377
+sensitivity_drop_clipped（补充）      method=HFGI        0.0015     4563   4563 15.5849  6.4399 20.3654       15.1683       15.8493
+sensitivity_drop_clipped（补充） method=StyleCLIP        0.0030     4338   4338 19.7673 13.6983 21.7951       19.5713       19.9557
+sensitivity_drop_clipped（补充）  method=infoswap        0.0000     7024   7024 16.3653  8.6718 20.3392       16.1051       16.5911
+sensitivity_drop_clipped（补充）   method=simswap        0.0000     3491   3491 14.4873  6.3344 19.3944       13.9338       14.9272
+         stratum  n_pairs  n_ids  median      q1      q3  median_ci_lo  median_ci_hi  frac_sib_own_ge05  own_ci_lo  own_ci_hi  frac_sib_own_lt05  frac_sib_probfake_ge05_ref  probfake_ci_lo  probfake_ci_hi                                                                                  group_source
+             all     4723   3476  8.4988  2.6060 15.7265        8.1408        8.8360             0.8238     0.8132     0.8339             0.1762                      0.9528          0.9466          0.9588 FP 分组口径：2026-10-07-asap-failure-analysis/scripts/diagnose_extra.py，阈值 0.5；字母同 verify_pairs.py
+      fp_group=A     3120   2215  5.9192  1.6184 13.2200        5.6048        6.3014             0.8154     0.8008     0.8288             0.1846                      0.9369          0.9277          0.9458 FP 分组口径：2026-10-07-asap-failure-analysis/scripts/diagnose_extra.py，阈值 0.5；字母同 verify_pairs.py
+      fp_group=B     1000    800 15.9988 11.5846 19.2442       15.5840       16.5444             0.8450     0.8230     0.8671             0.1550                      0.9950          0.9900          0.9990 FP 分组口径：2026-10-07-asap-failure-analysis/scripts/diagnose_extra.py，阈值 0.5；字母同 verify_pairs.py
+      fp_group=C      292    233  7.4029  2.5001 13.7956        6.4294        8.0352             0.8459     0.8034     0.8836             0.1541                      0.9966          0.9895          1.0000 FP 分组口径：2026-10-07-asap-failure-analysis/scripts/diagnose_extra.py，阈值 0.5；字母同 verify_pairs.py
+      fp_group=D      311    228 10.4996  5.5569 12.9975       10.0130       10.9578             0.8199     0.7785     0.8603             0.1801                      0.9357          0.9079          0.9612 FP 分组口径：2026-10-07-asap-failure-analysis/scripts/diagnose_extra.py，阈值 0.5；字母同 verify_pairs.py
+     method=HFGI     1131   1131  7.9998  1.8459 16.3148        7.1795        8.9940             0.6879     0.6605     0.7135             0.3121                      0.9390          0.9248          0.9531 FP 分组口径：2026-10-07-asap-failure-analysis/scripts/diagnose_extra.py，阈值 0.5；字母同 verify_pairs.py
+method=StyleCLIP     1057   1057 14.2249  6.4699 19.3976       13.6080       14.8769             0.8770     0.8562     0.8969             0.1230                      0.9716          0.9612          0.9802 FP 分组口径：2026-10-07-asap-failure-analysis/scripts/diagnose_extra.py，阈值 0.5；字母同 verify_pairs.py
+ method=infoswap     1763   1763  7.1096  2.3758 13.5923        6.6622        7.8184             0.8667     0.8497     0.8826             0.1333                      0.9592          0.9501          0.9682 FP 分组口径：2026-10-07-asap-failure-analysis/scripts/diagnose_extra.py，阈值 0.5；字母同 verify_pairs.py
+  method=simswap      772    772  6.4395  1.8199 12.2454        5.6335        7.1085             0.8523     0.8251     0.8769             0.1477                      0.9326          0.9158          0.9495 FP 分组口径：2026-10-07-asap-failure-analysis/scripts/diagnose_extra.py，阈值 0.5；字母同 verify_pairs.py
+[done] /nas/data_2/wanhongz/my-research/experiments/2026-10-15-orig-fp-lowlevel-probe/results/B1_V2/test  frozen_sha256=490a02f41bb810c60e899e4b36cd4f2ab92023224f5c09c29ef9e0d8c593cab5  (纯描述；不能据此断言模型内部机制)
+exit=0

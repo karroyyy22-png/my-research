@@ -1,0 +1,9 @@
+[frozen] sha256=490a02f41bb810c60e899e4b36cd4f2ab92023224f5c09c29ef9e0d8c593cab5
+                                     scope  n_fp  n_matched  match_rate  secondary_source split                                                    frozen_sha256
+                full_split_covariates_only  4071       3596    0.883321             False  test 490a02f41bb810c60e899e4b36cd4f2ab92023224f5c09c29ef9e0d8c593cab5
+            full_split_covariates_only:bbc   734        700    0.953678             False  test 490a02f41bb810c60e899e4b36cd4f2ab92023224f5c09c29ef9e0d8c593cab5
+       full_split_covariates_only:guardian  1827       1715    0.938697             False  test 490a02f41bb810c60e899e4b36cd4f2ab92023224f5c09c29ef9e0d8c593cab5
+      full_split_covariates_only:usa_today   779        623    0.799743             False  test 490a02f41bb810c60e899e4b36cd4f2ab92023224f5c09c29ef9e0d8c593cab5
+full_split_covariates_only:washington_post   731        558    0.763338             False  test 490a02f41bb810c60e899e4b36cd4f2ab92023224f5c09c29ef9e0d8c593cab5
+[low_sources] []
+[done] /nas/data_2/wanhongz/my-research/experiments/2026-10-15-orig-fp-lowlevel-probe/results/B1/test/pre_read_source_list.csv

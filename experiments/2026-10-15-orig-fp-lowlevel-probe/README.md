@@ -30,6 +30,10 @@
 
 B0 test（只读 metadata 与 pkl，描述性）在冻结文件 v1 下于 10-25 23:25 运行；B1（含 H2）、V0、V1、V2 的 test 尚未运行；冻结文件后续各版的修改均不由 B0 test 结果引起。
 
+`scripts/b1_verdict.py`（H1 判定）：该脚本在看过 test 之后编写，仅机械实现事先冻结的判据。
+
+超过 5MB 的结果文件以 `.csv.gz` 入库；gzip 后仍超过 5MB 的未入库，见 `results/large_files_manifest.txt`（路径、行数、sha256）。
+
 ### V1(c) 与 V2(a) 数字并列（val，只列数字）
 | 指标 | 子集 | 对数 | 值 [95% CI，id 簇] |
 |---|---|---|---|

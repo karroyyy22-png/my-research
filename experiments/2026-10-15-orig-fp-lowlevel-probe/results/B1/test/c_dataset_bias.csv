@@ -1,0 +1,25 @@
+contrast,feature,n_manip,n_unaltered,auc_manip,smd,note
+FS vs unaltered(orig/TS/TA unique images),lap_var,10515,18360,0.4985062629690752,0.019977140192672844,
+FS vs unaltered(orig/TS/TA unique images),noise_sigma,10515,18360,0.5002462842272218,0.014626634458498097,
+FS vs unaltered(orig/TS/TA unique images),noise_sigma_flat,10515,18360,0.4800990052596301,0.0003798080937913419,
+FS vs unaltered(orig/TS/TA unique images),jpeg_q,10515,18360,,,常数，不可检验
+FS vs unaltered(orig/TS/TA unique images),bytes_per_px,10515,18360,0.466483087238171,-0.09098703517543474,生成/重编码过程的痕迹（不解读为模型捷径）
+FS vs unaltered(orig/TS/TA unique images),mean_saturation,10515,18360,0.49030090067410703,-0.030124102468009385,
+FS vs unaltered(orig/TS/TA unique images),near_gray,10515,18360,0.5010277490295532,0.015710153078254522,
+FS vs unaltered(orig/TS/TA unique images),bright_mean,10515,18360,0.5109630214953842,0.041896579355134994,
+FS vs unaltered(orig/TS/TA unique images),bright_std,10515,18360,0.5010207018296302,0.003895737688716987,
+FS vs unaltered(orig/TS/TA unique images),face_lap_var,10515,18360,0.46415612565097897,-0.11829660119889132,
+FS vs unaltered(orig/TS/TA unique images),face_noise_sigma,10515,18360,0.4733915290636781,-0.053364721485543484,
+FS vs unaltered(orig/TS/TA unique images),face_bg_ratio,10514,18359,0.4158131147218595,-0.2766429298063747,
+FA vs unaltered(orig/TS/TA unique images),lap_var,8921,18360,0.5117991769438784,0.04600054856810325,
+FA vs unaltered(orig/TS/TA unique images),noise_sigma,8921,18360,0.5130591443068777,0.030807942324859734,
+FA vs unaltered(orig/TS/TA unique images),noise_sigma_flat,8921,18360,0.47659345626180327,-0.0016632131028705857,
+FA vs unaltered(orig/TS/TA unique images),jpeg_q,8921,18360,,,常数，不可检验
+FA vs unaltered(orig/TS/TA unique images),bytes_per_px,8921,18360,0.4609474895713744,-0.1055780515573135,生成/重编码过程的痕迹（不解读为模型捷径）
+FA vs unaltered(orig/TS/TA unique images),mean_saturation,8921,18360,0.49916830169151194,-0.00449024825773278,
+FA vs unaltered(orig/TS/TA unique images),near_gray,8921,18360,0.502227672508553,0.03296021852720857,
+FA vs unaltered(orig/TS/TA unique images),bright_mean,8921,18360,0.5099737034521614,0.03587071430309339,
+FA vs unaltered(orig/TS/TA unique images),bright_std,8921,18360,0.5006525141162843,0.003974858552559855,
+FA vs unaltered(orig/TS/TA unique images),face_lap_var,8921,18360,0.4741753351068285,-0.11851354865912914,
+FA vs unaltered(orig/TS/TA unique images),face_noise_sigma,8921,18360,0.4792869612690821,-0.05812064232571467,
+FA vs unaltered(orig/TS/TA unique images),face_bg_ratio,8920,18359,0.41718881173369105,-0.26303723750886404,
